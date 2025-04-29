@@ -13,7 +13,7 @@ struct PlayButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding(12)
-            .background(configuration.isPressed ? .gray.opacity(0.3) : .green)
+            .background(configuration.isPressed ? .gray.opacity(0.3) : .blue)
             .clipShape(Circle())
             .foregroundStyle(.white)
             .containerShape(Circle())

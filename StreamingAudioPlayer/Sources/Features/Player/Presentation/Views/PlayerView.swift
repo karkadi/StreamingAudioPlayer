@@ -17,12 +17,6 @@ struct PlayerView: View {
         self.store = store
     }
 
-//    @State private var viewModel: PlayerViewModel
-//
-//    init(store: StoreOf<PlayerReducer>) {
-//        self.viewModel = PlayerViewModel(store: store)
-//    }
-
     var body: some View {
         VStack(spacing: 20) {
             Text(store.station.name)

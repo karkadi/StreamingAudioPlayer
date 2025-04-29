@@ -5,7 +5,7 @@
 //  Created by Arkadiy KAZAZYAN on 28/04/2025.
 //
 
-
+// Sources/Features/Home/Presentation/Views/StationListView.swift
 import SwiftUI
 import ComposableArchitecture
 
@@ -28,23 +28,16 @@ struct StationListView: View {
                     .accessibilityLabel("Error: \(error)")
             } else {
                 ForEach(store.stations) { station in
-                    NavigationLink(
-                        value: station
-                    ) {
+                    Button {
+                        store.send(.playTapped(station))
+                    } label: {
                         StationRow(station: station)
                     }
-                    .accessibilityLabel("Select \(station.name)")
-                    .accessibilityHint("Navigates to player for \(station.name)")
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Play \(station.name)")
+                    .accessibilityHint("Starts playing \(station.name)")
                 }
             }
-        }
-        .navigationDestination(for: RadioStationEntity.self) { station in
-            PlayerView(
-                store: Store(
-                    initialState: PlayerReducer.State(station: station),
-                    reducer: { PlayerReducer() }
-                )
-            )
         }
     }
 }

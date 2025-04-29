@@ -18,15 +18,14 @@ final class AudioService {
     /// Plays audio from a URL.
     @MainActor
     func play(url: URL) async throws {
-        do {
-            let playerItem = AVPlayerItem(url: url)
-            player.replaceCurrentItem(with: playerItem)
-            player.play()
-            logger.info("Playing audio from \(url.absoluteString)")
-        } catch {
-            logger.error("Failed to play audio: \(error.localizedDescription)")
-            throw AudioError.playbackFailed(error)
+        guard url.isValidStreamingURL else {
+            logger.error("Invalid streaming URL: \(url.absoluteString)")
+            throw AudioError.invalidURL
         }
+        let playerItem = AVPlayerItem(url: url)
+        player.replaceCurrentItem(with: playerItem)
+        player.play()
+        logger.info("Playing audio from \(url.absoluteString)")
     }
 
     /// Pauses playback.
