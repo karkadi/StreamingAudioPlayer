@@ -9,7 +9,7 @@
 import SwiftUI
 import ComposableArchitecture
 
-/// Mini-player view displayed at the bottom of the main screen.
+/// Mini-player view displayed at the bottom of the main screen with a volume level bar.
 struct MiniPlayerView: View {
     @Bindable private var store: StoreOf<PlayerReducer>
     private let station: RadioStationEntity
@@ -20,9 +20,7 @@ struct MiniPlayerView: View {
     }
 
     var body: some View {
-        NavigationLink(
-            value: station
-        ) {
+        NavigationLink(value: station) {
             HStack {
                 Text(station.name)
                     .font(.subheadline)
@@ -30,6 +28,11 @@ struct MiniPlayerView: View {
                     .accessibilityLabel("Currently playing \(station.name)")
 
                 Spacer()
+
+                VolumeLevelBar(isPlaying: store.isPlaying)
+                    .accessibilityLabel("Playback volume indicator")
+                    .accessibilityValue(store.isPlaying ? "Playing" : "Paused")
+                    .accessibilityHidden(!store.isPlaying)
 
                 Button(action: {
                     if store.isPlaying {

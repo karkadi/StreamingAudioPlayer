@@ -33,9 +33,22 @@
 		5B7D89652DC018B000E2AAAB /* StreamingAudioPlayerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StreamingAudioPlayerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		5B7058A72DC0F7D200C6C5A3 /* Exceptions for "StreamingAudioPlayer" folder in "StreamingAudioPlayer" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 5B7D894D2DC018AE00E2AAAB /* StreamingAudioPlayer */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5B7D89502DC018AE00E2AAAB /* StreamingAudioPlayer */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5B7058A72DC0F7D200C6C5A3 /* Exceptions for "StreamingAudioPlayer" folder in "StreamingAudioPlayer" target */,
+			);
 			path = StreamingAudioPlayer;
 			sourceTree = "<group>";
 		};
@@ -409,6 +422,7 @@
 				DEVELOPMENT_TEAM = 34Z5QG59S2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StreamingAudioPlayer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -437,6 +451,7 @@
 				DEVELOPMENT_TEAM = 34Z5QG59S2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StreamingAudioPlayer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -10,10 +10,27 @@ import AVKit
 import Foundation
 import OSLog
 
-/// Service for streaming audio using AVPlayer.
+/// Service for streaming audio using AVPlayer with background playback support.
 final class AudioService {
     private let player = AVPlayer()
     private let logger = Logger(subsystem: "com.example.RadioStreaming", category: "AudioService")
+    private let audioSession = AVAudioSession.sharedInstance()
+
+    init() {
+        Task { await setupAudioSession() }
+    }
+
+    /// Configures the audio session for background playback.
+    @MainActor
+    private func setupAudioSession() {
+        do {
+            try audioSession.setCategory(.playback, mode: .default, options: [])
+            try audioSession.setActive(true)
+            logger.info("Audio session configured for background playback")
+        } catch {
+            logger.error("Failed to configure audio session: \(error.localizedDescription)")
+        }
+    }
 
     /// Plays audio from a URL.
     @MainActor
@@ -35,11 +52,16 @@ final class AudioService {
         logger.info("Paused audio")
     }
 
-    /// Stops playback.
+    /// Stops playback and deactivates the audio session.
     @MainActor
     func stop() {
         player.replaceCurrentItem(with: nil)
-        logger.info("Stopped audio")
+        do {
+            try audioSession.setActive(false)
+            logger.info("Stopped audio and deactivated audio session")
+        } catch {
+            logger.error("Failed to deactivate audio session: \(error.localizedDescription)")
+        }
     }
 }
 
