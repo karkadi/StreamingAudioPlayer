@@ -9,7 +9,7 @@
 import SwiftUI
 import ComposableArchitecture
 
-/// View for controlling audio playback.
+/// Full-screen player view for controlling playback.
 struct PlayerView: View {
     @Bindable private var store: StoreOf<PlayerReducer>
 
@@ -18,9 +18,10 @@ struct PlayerView: View {
     }
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 16) {
             Text(store.station.name)
                 .font(.title)
+                .lineLimit(1)
                 .accessibilityLabel("Playing \(store.station.name)")
 
             if let error = store.error {
@@ -70,12 +71,22 @@ struct PlayerView: View {
         .navigationTitle("Player")
         .dynamicTypeSize(.large...DynamicTypeSize.xxxLarge)
         .sensoryFeedback(.impact, trigger: store.isPlaying)
+        .onOpenURL { url in
+            if url.absoluteString == "radiostreaming://playpause" {
+                if store.isPlaying {
+                    store.send(.pauseTapped)
+                } else {
+                    store.send(.playTapped)
+                }
+                triggerHaptic()
+            }
+        }
     }
 
     private func triggerHaptic() {
-#if os(iOS)
+        #if os(iOS)
         UINotificationFeedbackGenerator().notificationOccurred(.success)
-#endif
+        #endif
     }
 }
 

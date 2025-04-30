@@ -13,7 +13,7 @@ import OSLog
 /// Service for streaming audio using AVPlayer with background playback support.
 final class AudioService {
     private let player = AVPlayer()
-    private let logger = Logger(subsystem: "com.example.RadioStreaming", category: "AudioService")
+    private let logger = Logger(subsystem: "amongus.com.StreamingAudioPlayer", category: "AudioService")
     private let audioSession = AVAudioSession.sharedInstance()
 
     init() {
