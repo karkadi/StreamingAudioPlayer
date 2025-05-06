@@ -11,7 +11,6 @@ struct RadioLiveActivityAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         var isPlaying: Bool
     }
-
     var stationName: String
 }
 

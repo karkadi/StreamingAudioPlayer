@@ -8,8 +8,11 @@
 import SwiftUI
 import ComposableArchitecture
 
+
 @main
 struct StreamingAudioPlayerApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     var body: some Scene {
         WindowGroup {
             HomeView(
@@ -20,4 +23,12 @@ struct StreamingAudioPlayerApp: App {
             )
         }
     }
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+
+    func applicationWillTerminate(_ application: UIApplication) {
+        LiveActivityManager.shared.stopSessionTimeoutAsync()
+    }
+
 }

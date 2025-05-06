@@ -1,5 +1,5 @@
 //
-//  DependencyValues+Extensions.swift
+//  HomeUseCaseKey.swift
 //  StreamingAudioPlayer
 //
 //  Created by Arkadiy KAZAZYAN on 28/04/2025.
@@ -14,11 +14,6 @@ extension DependencyValues {
         get { self[HomeUseCaseKey.self] }
         set { self[HomeUseCaseKey.self] = newValue }
     }
-
-    var playerUseCase: PlayerUseCase {
-        get { self[PlayerUseCaseKey.self] }
-        set { self[PlayerUseCaseKey.self] = newValue }
-    }
 }
 
 private enum HomeUseCaseKey: DependencyKey {
@@ -27,8 +22,4 @@ private enum HomeUseCaseKey: DependencyKey {
     )
 }
 
-private enum PlayerUseCaseKey: DependencyKey {
-    static let liveValue = PlayerUseCase(
-        repository: PlayerRepository(audioService: AudioService())
-    )
-}
+

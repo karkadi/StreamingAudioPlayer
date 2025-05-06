@@ -12,6 +12,6 @@ import SwiftUI
 struct RadioLiveActivityWidgetBundle: WidgetBundle {
     var body: some Widget {
         RadioLiveActivityWidget()
-    //    RadioLiveActivityWidgetLiveActivity()
+        RadioLiveActivityWidgetLiveActivity()
     }
 }

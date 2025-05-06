@@ -11,6 +11,7 @@ import ComposableArchitecture
 
 /// Mini-player view displayed at the bottom of the main screen with a volume level bar.
 struct MiniPlayerView: View {
+  //  @AppStorage("isPlaying") private var isPlaying: Bool = false
     @Bindable private var store: StoreOf<PlayerReducer>
     private let station: RadioStationEntity
 
@@ -35,6 +36,7 @@ struct MiniPlayerView: View {
                     .accessibilityHidden(!store.isPlaying)
 
                 Button(action: {
+                   // isPlaying = store.isPlaying
                     if store.isPlaying {
                         store.send(.pauseTapped)
                     } else {

@@ -58,6 +58,7 @@
 		5BBEFF252DC104BE004E2F5D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		5BBEFF272DC104BE004E2F5D /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		5BD9246F2DC23795005A8BF6 /* RadioLiveActivityWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RadioLiveActivityWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BDAD6912DC3797200701D66 /* RadioLiveActivityWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RadioLiveActivityWidgetExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -72,16 +73,26 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				RadioLiveActivityWidgetLiveActivity.swift,
 			);
 			target = 5BD9246E2DC23795005A8BF6 /* RadioLiveActivityWidgetExtension */;
 		};
 		5BD924842DC23B6A005A8BF6 /* Exceptions for "RadioLiveActivityWidget" folder in "StreamingAudioPlayer" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				RadioLiveActivityAttributes.swift,
+				Shared/AppGroup.swift,
+				Shared/RadioLiveActivityAttributes.swift,
+				Shared/UserDefaultKey.swift,
+				"Shared/UserDefaults+Extensions.swift",
 			);
 			target = 5B7D894D2DC018AE00E2AAAB /* StreamingAudioPlayer */;
+		};
+		5BDAD69B2DC3E81F00701D66 /* Exceptions for "StreamingAudioPlayer" folder in "RadioLiveActivityWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Sources/Core/Extensions/URL+Extensions.swift",
+				Sources/Services/Audio/AudioService.swift,
+			);
+			target = 5BD9246E2DC23795005A8BF6 /* RadioLiveActivityWidgetExtension */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -90,6 +101,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				5B7058A72DC0F7D200C6C5A3 /* Exceptions for "StreamingAudioPlayer" folder in "StreamingAudioPlayer" target */,
+				5BDAD69B2DC3E81F00701D66 /* Exceptions for "StreamingAudioPlayer" folder in "RadioLiveActivityWidgetExtension" target */,
 			);
 			path = StreamingAudioPlayer;
 			sourceTree = "<group>";
@@ -153,6 +165,7 @@
 		5B7D89452DC018AE00E2AAAB = {
 			isa = PBXGroup;
 			children = (
+				5BDAD6912DC3797200701D66 /* RadioLiveActivityWidgetExtension.entitlements */,
 				5B7D89502DC018AE00E2AAAB /* StreamingAudioPlayer */,
 				5B7D895E2DC018B000E2AAAB /* StreamingAudioPlayerTests */,
 				5B7D89682DC018B000E2AAAB /* StreamingAudioPlayerUITests */,
@@ -536,6 +549,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = StreamingAudioPlayer/StreamingAudioPlayer.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MBM8NLR735;
@@ -543,7 +558,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StreamingAudioPlayer/Info.plist;
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -556,6 +570,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = karkadi.com.StreamingAudioPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -567,6 +582,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = StreamingAudioPlayer/StreamingAudioPlayer.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MBM8NLR735;
@@ -574,7 +591,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StreamingAudioPlayer/Info.plist;
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -587,6 +603,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = karkadi.com.StreamingAudioPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -670,6 +687,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = RadioLiveActivityWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MBM8NLR735;
@@ -677,6 +695,7 @@
 				INFOPLIST_FILE = RadioLiveActivityWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = RadioLiveActivityWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -697,6 +716,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = RadioLiveActivityWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MBM8NLR735;
@@ -704,6 +724,7 @@
 				INFOPLIST_FILE = RadioLiveActivityWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = RadioLiveActivityWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

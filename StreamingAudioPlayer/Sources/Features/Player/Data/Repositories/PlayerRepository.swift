@@ -17,21 +17,22 @@ protocol PlayerRepositoryProtocol {
 
 /// Repository for player actions.
 final class PlayerRepository: PlayerRepositoryProtocol {
-    private let audioService: AudioService
 
     init(audioService: AudioService) {
-        self.audioService = audioService
     }
 
     func play(station: RadioStationEntity) async throws {
-        try await audioService.play(url: station.streamURL)
+        try await AudioService.shared.play(station: station.name, url: station.streamURL)
+        try await LiveActivityManager.shared.startLiveActivity(station: station.name, isPlaying: true)
     }
 
     func pause() async {
-        await audioService.pause()
+        await AudioService.shared.pause()
+        await LiveActivityManager.shared.endLiveActivity()
     }
 
     func stop() async {
-        await audioService.stop()
+        await AudioService.shared.stop()
+        await LiveActivityManager.shared.endLiveActivity()
     }
 }

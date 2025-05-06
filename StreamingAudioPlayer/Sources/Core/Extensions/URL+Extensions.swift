@@ -5,7 +5,6 @@
 //  Created by Arkadiy KAZAZYAN on 29/04/2025.
 //
 
-
 // Sources/Core/Extensions/URLExtensions.swift
 import Foundation
 

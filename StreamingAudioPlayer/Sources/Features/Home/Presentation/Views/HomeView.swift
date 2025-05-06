@@ -12,6 +12,7 @@ import ComposableArchitecture
 /// Main view displaying list of radio stations with a mini-player at the bottom.
 struct HomeView: View {
     @Bindable private var store: StoreOf<HomeReducer>
+ //   @AppStorage("isPlaying") private var isPlaying: Bool = false
 
     init(store: StoreOf<HomeReducer>) {
         self.store = store
