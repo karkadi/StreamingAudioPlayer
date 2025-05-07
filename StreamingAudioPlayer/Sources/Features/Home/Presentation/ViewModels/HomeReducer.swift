@@ -5,7 +5,6 @@
 //  Created by Arkadiy KAZAZYAN on 28/04/2025.
 //
 
-// Sources/Features/Home/Presentation/HomeReducer.swift
 import ComposableArchitecture
 import Foundation
 
@@ -20,7 +19,10 @@ struct HomeReducer {
 
         /// Computed property to provide non-optional player state for scoping.
         var nonOptionalPlayerState: PlayerReducer.State {
-            get { playerState ?? PlayerReducer.State(station: RadioStationEntity(id: UUID(), name: "", streamURL: URL(string: "https://example.com")!)) }
+            get { playerState ?? PlayerReducer.State(station: RadioStationEntity(id: UUID(),
+                                                                                 name: "Радио 1.FM",
+                                                                                 imagrUrl: URL(string:"https://radiopotok.ru/f/station/512/38.png")!,
+                                                                                 streamURL: URL(string: "https://strm112.1.fm/top40_mobile_mp3")!)) }
             set { playerState = newValue }
         }
     }

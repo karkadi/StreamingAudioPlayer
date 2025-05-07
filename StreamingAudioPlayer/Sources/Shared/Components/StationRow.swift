@@ -5,7 +5,6 @@
 //  Created by Arkadiy KAZAZYAN on 28/04/2025.
 //
 
-// Sources/Shared/Components/StationRow.swift
 import SwiftUI
 
 /// Reusable view for displaying a radio station.
@@ -30,6 +29,9 @@ struct StationRow: View {
 
 #Preview {
     VStack {
-        StationRow(station: RadioStationEntity(id: UUID(), name: "France Inter", streamURL: URL(string: "https://icecast.radiofrance.fr/franceinter-hifi.aac")!))
+        StationRow(station: RadioStationEntity(id: UUID(),
+                                               name: "Радио 1.FM",
+                                               imagrUrl: URL(string:"https://radiopotok.ru/f/station/512/38.png")!,
+                                               streamURL: URL(string: "https://strm112.1.fm/top40_mobile_mp3")!))
     }
 }

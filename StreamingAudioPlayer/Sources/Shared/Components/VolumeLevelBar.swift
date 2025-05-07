@@ -5,8 +5,6 @@
 //  Created by Arkadiy KAZAZYAN on 29/04/2025.
 //
 
-
-// Sources/Shared/Components/VolumeLevelBar.swift
 import SwiftUI
 
 /// A view displaying animated volume level bars for playback indication.

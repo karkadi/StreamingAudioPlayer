@@ -49,10 +49,9 @@ struct RadioLiveActivityWidgetLiveActivity: Widget {
     }
 }
 
-//#Preview("Notification", as: .content, using: RadioLiveActivityAttributes.preview) {
-//    RadioLiveActivityWidgetLiveActivity()
-//} contentStates: {
-//    RadioLiveActivityAttributes.ContentState.init(isPlaying: true)
-//    RadioLiveActivityAttributes.ContentState.init(isPlaying: false)
-//}
-
+#Preview("Notification", as: .content, using: RadioLiveActivityAttributes.preview) {
+    RadioLiveActivityWidgetLiveActivity()
+} contentStates: {
+    RadioLiveActivityAttributes.ContentState.init(isPlaying: true)
+    RadioLiveActivityAttributes.ContentState.init(isPlaying: false)
+}

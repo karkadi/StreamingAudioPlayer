@@ -12,7 +12,7 @@ import AppIntents
 
 extension RadioLiveActivityWidget {
     struct Provider: TimelineProvider {
-
+        typealias Entry = SoundsEntry
         func placeholder(in context: Context) -> Entry {
             .placeholder
         }
@@ -23,20 +23,27 @@ extension RadioLiveActivityWidget {
 
         func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
             let isPlaying = UserDefaults.appGroup.bool(forKey: UserDefaultKey.isAudioPlaying)
-            let entry = Entry(isPlaying: isPlaying)
+            let currentStationName = UserDefaults.appGroup.string(forKey: UserDefaultKey.currentStationName)
+            let currentStationUrl = UserDefaults.appGroup.string(forKey: UserDefaultKey.currentStationUrl)
+
+            let entry = Entry(isPlaying: isPlaying,
+                              currentStationName: currentStationName,
+                              currentStationUrl: currentStationUrl)
             completion(.init(entries: [entry], policy: .never))
         }
     }
 }
 
 extension RadioLiveActivityWidget {
-    struct Entry: TimelineEntry {
+    struct SoundsEntry: TimelineEntry {
         var date: Date = .now
         var isPlaying: Bool
+        var currentStationName: String?
+        var currentStationUrl: String?
     }
 }
 
-extension RadioLiveActivityWidget.Entry {
+extension RadioLiveActivityWidget.SoundsEntry {
     static var placeholder: Self {
         .init(isPlaying: false)
     }
@@ -44,7 +51,7 @@ extension RadioLiveActivityWidget.Entry {
 
 struct AudioWidgetEntryView: View {
 
-    var entry: RadioLiveActivityWidget.Entry
+    var entry: RadioLiveActivityWidget.SoundsEntry
 
     var body: some View {
         VStack {

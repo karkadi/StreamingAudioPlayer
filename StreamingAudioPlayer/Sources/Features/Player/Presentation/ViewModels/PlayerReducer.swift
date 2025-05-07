@@ -5,7 +5,6 @@
 //  Created by Arkadiy KAZAZYAN on 28/04/2025.
 //
 
-// Sources/Features/Player/Presentation/PlayerReducer.swift
 import ComposableArchitecture
 import Foundation
 
@@ -23,6 +22,7 @@ struct PlayerReducer {
         case pauseTapped
         case stopTapped
         case playbackFailed(Error)
+        case externalPlaybackStateChanged(Bool)
     }
 
     @Dependency(\.playerUseCase) var playerUseCase
@@ -58,6 +58,11 @@ struct PlayerReducer {
                 return .run { send in
                     await playerUseCase.stop()
                 }
+
+            case .externalPlaybackStateChanged(let isPlaying):
+                state.isPlaying = isPlaying
+                return .none
+
             }
         }
     }

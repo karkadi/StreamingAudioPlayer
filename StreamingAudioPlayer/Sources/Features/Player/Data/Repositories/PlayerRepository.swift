@@ -5,7 +5,6 @@
 //  Created by Arkadiy KAZAZYAN on 28/04/2025.
 //
 
-// Sources/Features/Player/Data/Repositories/PlayerRepository.swift
 import Foundation
 
 /// Protocol for player actions.
@@ -22,6 +21,7 @@ final class PlayerRepository: PlayerRepositoryProtocol {
     }
 
     func play(station: RadioStationEntity) async throws {
+        await LiveActivityManager.shared.endLiveActivity()
         try await AudioService.shared.play(station: station.name, url: station.streamURL)
         try await LiveActivityManager.shared.startLiveActivity(station: station.name, isPlaying: true)
     }

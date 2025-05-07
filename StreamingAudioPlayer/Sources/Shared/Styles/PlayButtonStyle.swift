@@ -5,7 +5,6 @@
 //  Created by Arkadiy KAZAZYAN on 28/04/2025.
 //
 
-// Sources/Shared/Styles/PlayButtonStyle.swift
 import SwiftUI
 
 /// Custom button style for play/pause/stop buttons.

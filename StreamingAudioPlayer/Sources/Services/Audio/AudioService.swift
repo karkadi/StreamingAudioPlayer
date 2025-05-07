@@ -5,7 +5,6 @@
 //  Created by Arkadiy KAZAZYAN on 28/04/2025.
 //
 
-// Sources/Services/Network/AudioService.swift
 import AVKit
 import Foundation
 import OSLog
@@ -16,29 +15,34 @@ final class AudioService {
     static let shared = AudioService()
     private let player = AVPlayer()
     private let logger = Logger(subsystem: "karkadi.com.StreamingAudioPlayer", category: "AudioService")
-    private var state: State = .disabled
-
+    private var state: State = .disabled {
+        didSet {
+            // Save playing state to UserDefaults whenever it changes
+            UserDefaults.appGroup.set(state == .playing, forKey: UserDefaultKey.isAudioPlaying)
+        }
+    }
+    
     private enum State {
         case playing
         case paused
         case stopped
         case disabled
     }
-
+    
     init() {
         Task {
             await setupAudioSession()
         }
     }
-
+    
     var isEnabled: Bool {
         state != .disabled
     }
-
+    
     var isPlaying: Bool {
         state == .playing
     }
-
+    
     /// Configures the audio session for background playback.
     @MainActor
     private func setupAudioSession() {
@@ -63,9 +67,14 @@ final class AudioService {
         let playerItem = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: playerItem)
         player.play()
-        state = .playing
+        Task {
+            try await Task.sleep(for: .seconds(1))  // Wait for 1 seconds
+            state = .playing
+        }
+        
         logger.info("Playing audio from \(url.absoluteString)")
-
+        UserDefaults.appGroup.set(station, forKey: UserDefaultKey.currentStationName)
+        UserDefaults.appGroup.set(url, forKey: UserDefaultKey.currentStationUrl)
     }
     
     /// Pauses playback.
@@ -74,23 +83,25 @@ final class AudioService {
         player.pause()
         state = .paused
         logger.info("Paused audio")
-
+        
     }
     
     /// Stops playback and deactivates the audio session.
     @MainActor
     func stop() async {
         player.replaceCurrentItem(with: nil)
+        UserDefaults.appGroup.removeObject(forKey: UserDefaultKey.currentStationName)
+        UserDefaults.appGroup.removeObject(forKey: UserDefaultKey.currentStationUrl)
         do {
             try AVAudioSession.sharedInstance().setActive(false)
             state = .stopped
             logger.info("Stopped audio and deactivated audio session")
-
+            
         } catch {
             logger.error("Failed to deactivate audio session: \(error.localizedDescription)")
         }
     }
-
+    
 }
 
 /// Error types for audio service.

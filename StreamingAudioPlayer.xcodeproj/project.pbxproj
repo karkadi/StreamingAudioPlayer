@@ -91,6 +91,7 @@
 			membershipExceptions = (
 				"Sources/Core/Extensions/URL+Extensions.swift",
 				Sources/Services/Audio/AudioService.swift,
+				Sources/Services/Audio/AudioStateObserver.swift,
 			);
 			target = 5BD9246E2DC23795005A8BF6 /* RadioLiveActivityWidgetExtension */;
 		};

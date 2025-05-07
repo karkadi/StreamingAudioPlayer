@@ -9,4 +9,6 @@ import Foundation
 
 enum UserDefaultKey {
     static var isAudioPlaying: String { #function }
+    static var currentStationName: String { #function }
+    static var currentStationUrl: String { #function }
 }

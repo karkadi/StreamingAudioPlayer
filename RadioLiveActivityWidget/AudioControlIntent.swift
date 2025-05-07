@@ -67,10 +67,10 @@ struct AudioControlIntent: AudioPlaybackIntent {
             await activity.update(content)
         }
 
-        UserDefaults.appGroup.set(
-            AudioService.shared.isPlaying,
-            forKey: UserDefaultKey.isAudioPlaying
-        )
+//        UserDefaults.appGroup.set(
+//            AudioService.shared.isPlaying,
+//            forKey: UserDefaultKey.isAudioPlaying
+//        )
         return .result()
     }
 }
