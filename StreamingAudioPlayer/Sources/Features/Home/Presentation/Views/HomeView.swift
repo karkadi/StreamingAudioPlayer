@@ -11,7 +11,8 @@ import ComposableArchitecture
 /// Main view displaying list of radio stations with a mini-player at the bottom.
 struct HomeView: View {
     @Bindable private var store: StoreOf<HomeReducer>
-
+    @State private var showAboutView = false
+    
     init(store: StoreOf<HomeReducer>) {
         self.store = store
     }
@@ -39,6 +40,19 @@ struct HomeView: View {
                 }
             }
             .navigationTitle("Radio Stations")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        showAboutView = true
+                    } label: {
+                        Image(systemName: "info.circle")
+                            .foregroundColor(.white)
+                    }
+                }
+            }
+            .sheet(isPresented: $showAboutView) {
+                AboutView()
+            }
             .onAppear {
                 store.send(.onAppear)
             }

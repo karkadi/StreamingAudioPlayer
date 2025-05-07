@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B3148382DCB81F000AFDE0A /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 5B3148372DCB81F000AFDE0A /* CachedAsyncImage */; };
 		5B7D89A02DC01A4100E2AAAB /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5B7D899F2DC01A4100E2AAAB /* ComposableArchitecture */; };
 		5BD924702DC23795005A8BF6 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BBEFF252DC104BE004E2F5D /* WidgetKit.framework */; };
 		5BD924712DC23795005A8BF6 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BBEFF272DC104BE004E2F5D /* SwiftUI.framework */; };
@@ -134,6 +135,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B7D89A02DC01A4100E2AAAB /* ComposableArchitecture in Frameworks */,
+				5B3148382DCB81F000AFDE0A /* CachedAsyncImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,6 +221,7 @@
 			name = StreamingAudioPlayer;
 			packageProductDependencies = (
 				5B7D899F2DC01A4100E2AAAB /* ComposableArchitecture */,
+				5B3148372DCB81F000AFDE0A /* CachedAsyncImage */,
 			);
 			productName = StreamingAudioPlayer;
 			productReference = 5B7D894E2DC018AE00E2AAAB /* StreamingAudioPlayer.app */;
@@ -329,6 +332,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				5B7D899E2DC01A4100E2AAAB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				5B3148362DCB81F000AFDE0A /* XCRemoteSwiftPackageReference "CachedAsyncImage" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5B7D894F2DC018AE00E2AAAB /* Products */;
@@ -792,6 +796,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5B3148362DCB81F000AFDE0A /* XCRemoteSwiftPackageReference "CachedAsyncImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bullinnyc/CachedAsyncImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.0;
+			};
+		};
 		5B7D899E2DC01A4100E2AAAB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
@@ -803,6 +815,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5B3148372DCB81F000AFDE0A /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5B3148362DCB81F000AFDE0A /* XCRemoteSwiftPackageReference "CachedAsyncImage" */;
+			productName = CachedAsyncImage;
+		};
 		5B7D899F2DC01A4100E2AAAB /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5B7D899E2DC01A4100E2AAAB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;

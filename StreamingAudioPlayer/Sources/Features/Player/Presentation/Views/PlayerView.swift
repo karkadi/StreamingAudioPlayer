@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import CachedAsyncImage
 
 /// Full-screen player view for controlling playback.
 struct PlayerView: View {
@@ -19,20 +20,26 @@ struct PlayerView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            AsyncImage(url: store.station.imagrUrl){ image in
-                // 1
-                image
+
+            CachedAsyncImage(url: store.station.imagrUrl.absoluteString,
+                             placeholder: { progress in
+                ZStack {
+                    Color.background
+                    ProgressView {
+                        VStack {
+                            Text("Loading...")
+                            Text("\(progress) %")
+                        }
+                    }
+                }
+            },
+                             image: {
+                // Customize image.
+                Image(uiImage: $0)
                     .resizable()
-                    .frame(width: 200, height: 200)
-                //    .clipShape(Circle())
-            } placeholder: {
-                // 2
-                ProgressView()
-                    .padding()
-                    .frame(width: 200, height: 200)
-                    .background(Color.gray.opacity(0.7))
-                    .clipShape(Circle())
-            }
+                    .scaledToFill()
+            })
+            .frame(width: 200, height: 200)
 
             Text(store.station.name)
                 .font(.title)

@@ -6,8 +6,7 @@
 //
 
 import SwiftUI
-import ComposableArchitecture
-
+import CachedAsyncImage
 
 @main
 struct StreamingAudioPlayerApp: App {
@@ -15,13 +14,17 @@ struct StreamingAudioPlayerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            HomeView(
-                store: Store(
-                    initialState: HomeReducer.State(),
-                    reducer: { HomeReducer() }
-                )
-            )
+            LaunchScreenView()
+                .preferredColorScheme(.dark)
         }
+    }
+
+    init() {
+        // Set image cache limit.
+        ImageCache().wrappedValue.setCacheLimit(
+            countLimit: 1_000, // 1000 items
+            totalCostLimit: 1_024 * 1_024 * 200 // 200 MB
+        )
     }
 }
 

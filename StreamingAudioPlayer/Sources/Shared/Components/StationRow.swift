@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CachedAsyncImage
 
 /// Reusable view for displaying a radio station.
 struct StationRow: View {
@@ -13,6 +14,23 @@ struct StationRow: View {
 
     var body: some View {
         HStack {
+            CachedAsyncImage(url: station.imagrUrl.absoluteString,
+                             placeholder: { progress in
+                ZStack {
+                    Color.background
+                    ProgressView {
+                        Text("\(progress) %")
+                    }
+                }
+            },
+                             image: {
+                // Customize image.
+                Image(uiImage: $0)
+                    .resizable()
+                    .scaledToFill()
+            })
+             .frame(width: 30, height: 30)
+
             Text(station.name)
                 .font(.headline)
             Spacer()
