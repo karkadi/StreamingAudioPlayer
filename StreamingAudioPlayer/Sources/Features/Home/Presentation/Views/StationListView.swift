@@ -26,11 +26,15 @@ struct StationListView: View {
                     .foregroundStyle(.red)
                     .accessibilityLabel("Error: \(error)")
             } else {
-                ForEach(store.stations) { station in
+                ForEach(store.displayedStations) { station in
                     Button {
                         store.send(.playTapped(station))
                     } label: {
-                        StationRow(station: station)
+                        StationRow(station: station,
+                                   isFavorite: store.favoriteStationIds.contains(station.id),
+                                   onFavoriteToggle : {
+                            store.send(.toggleFavorite(station.id))
+                        })
                     }
                     .buttonStyle(.plain)
                     .accessibilityLabel("Play \(station.name)")

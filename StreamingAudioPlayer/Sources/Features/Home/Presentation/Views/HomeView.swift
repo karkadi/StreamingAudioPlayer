@@ -12,31 +12,44 @@ import ComposableArchitecture
 struct HomeView: View {
     @Bindable private var store: StoreOf<HomeReducer>
     @State private var showAboutView = false
-    
+    @State private var selectedFilter: HomeReducer.State.StationFilter = .all
+
     init(store: StoreOf<HomeReducer>) {
         self.store = store
     }
 
     var body: some View {
         NavigationStack {
-            ZStack(alignment: .bottom) {
-                ScrollView {
-                    StationListView(store: store)
-                        .contentMargins(.vertical, 16)
+            VStack {
+                Picker("Filter", selection: $selectedFilter) {
+                    ForEach(HomeReducer.State.StationFilter.allCases, id: \.self) { filter in
+                        Text(filter.rawValue).tag(filter)
+                    }
                 }
-                .scrollTargetBehavior(.paging)
+                .pickerStyle(.segmented)
+                .padding()
+                .accessibilityLabel("Station filter")
+                .accessibilityHint("Select to show all stations or only favorites")
 
-                if let playerState = store.playerState {
-                    MiniPlayerView(
-                        store: store.scope(state: \.nonOptionalPlayerState, action: \.player),
-                        station: playerState.station
-                    )
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
-                    .background(.thinMaterial)
-                    .containerShape(RoundedRectangle(cornerRadius: 8))
-                    .contentMargins(.bottom, 16)
-                    .accessibilityElement(children: .contain)
-                    .accessibilityLabel("Mini player for \(playerState.station.name)")
+                ZStack(alignment: .bottom) {
+                    ScrollView {
+                        StationListView(store: store)
+                            .contentMargins(.vertical, 16)
+                    }
+                    .scrollTargetBehavior(.paging)
+
+                    if let playerState = store.playerState {
+                        MiniPlayerView(
+                            store: store.scope(state: \.nonOptionalPlayerState, action: \.player),
+                            station: playerState.station
+                        )
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                        .background(.thinMaterial)
+                        .containerShape(RoundedRectangle(cornerRadius: 8))
+                        .contentMargins(.bottom, 16)
+                        .accessibilityElement(children: .contain)
+                        .accessibilityLabel("Mini player for \(playerState.station.name)")
+                    }
                 }
             }
             .navigationTitle("Radio Stations")
@@ -55,6 +68,9 @@ struct HomeView: View {
             }
             .onAppear {
                 store.send(.onAppear)
+            }
+            .onChange(of: selectedFilter) { _, newValue in
+                store.send(.filterChanged(newValue))
             }
             .navigationDestination(for: RadioStationEntity.self) { station in
                 PlayerView(

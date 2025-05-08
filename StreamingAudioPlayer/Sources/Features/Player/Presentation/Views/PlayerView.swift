@@ -90,7 +90,7 @@ struct PlayerView: View {
 }
 
 #Preview {
-    let station = RadioStationEntity(id: UUID(),
+    let station = RadioStationEntity(id: 1,
                                      name: "Радио 1.FM",
                                      imagrUrl: URL(string:"https://radiopotok.ru/f/station/512/38.png")!,
                                      streamURL: URL(string: "https://strm112.1.fm/top40_mobile_mp3")!)

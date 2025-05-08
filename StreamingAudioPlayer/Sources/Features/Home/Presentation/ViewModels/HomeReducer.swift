@@ -13,13 +13,29 @@ struct HomeReducer {
     @ObservableState
     struct State: Equatable {
         var stations: [RadioStationEntity] = []
+        var favoriteStationIds: [Int] = []
+        var selectedFilter: StationFilter = .all
         var isLoading: Bool = false
         var error: String?
         var playerState: PlayerReducer.State?
 
+        enum StationFilter: String, CaseIterable {
+            case all = "All"
+            case favorites = "Favorites"
+        }
+
+        var displayedStations: [RadioStationEntity] {
+                    switch selectedFilter {
+                    case .all:
+                        return stations
+                    case .favorites:
+                        return stations.filter { favoriteStationIds.contains($0.id) }
+                    }
+                }
+
         /// Computed property to provide non-optional player state for scoping.
         var nonOptionalPlayerState: PlayerReducer.State {
-            get { playerState ?? PlayerReducer.State(station: RadioStationEntity(id: UUID(),
+            get { playerState ?? PlayerReducer.State(station: RadioStationEntity(id: 1,
                                                                                  name: "Радио 1.FM",
                                                                                  imagrUrl: URL(string:"https://radiopotok.ru/f/station/512/38.png")!,
                                                                                  streamURL: URL(string: "https://strm112.1.fm/top40_mobile_mp3")!)) }
@@ -34,10 +50,14 @@ struct HomeReducer {
         case player(PlayerReducer.Action)
         case playTapped(RadioStationEntity)
         case pauseTapped
+        case favoriteIdsLoaded([Int])
+        case toggleFavorite(Int)
+        case filterChanged(State.StationFilter)
     }
 
     @Dependency(\.homeUseCase) var homeUseCase
     @Dependency(\.playerUseCase) var playerUseCase
+    @Dependency(\.favoriteUseCase) var favoriteUseCase
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -51,7 +71,44 @@ struct HomeReducer {
                     } catch {
                         await send(.failedToLoad(error))
                     }
+                    do {
+                        let favoriteIds = try await favoriteUseCase.getFavoriteStationIds()
+                        await send(.favoriteIdsLoaded(favoriteIds))
+                    } catch {
+                        print("Failed to load favorites: \(error)")
+                    }
                 }
+
+            case .favoriteIdsLoaded(let ids):
+                state.favoriteStationIds = ids
+                return .none
+
+            case .toggleFavorite(let stationId):
+                let hasFavorite = state.favoriteStationIds.contains(stationId)
+                if hasFavorite {
+                    state.favoriteStationIds.removeAll { $0 == stationId }
+                } else {
+                    state.favoriteStationIds.append(stationId)
+                }
+                return .run { [hasFavorite, stationId] send in
+                    if hasFavorite {
+                        do {
+                            try await favoriteUseCase.removeFavorite(stationId: stationId)
+                        } catch {
+                            print("Failed to remove favorite: \(error)")
+                        }
+                    } else {
+                        do {
+                            try await favoriteUseCase.addFavorite(stationId: stationId)
+                        } catch {
+                            print("Failed to add favorite: \(error)")
+                        }
+                    }
+                }
+
+            case .filterChanged(let filter):
+                state.selectedFilter = filter
+                return .none
 
             case .stationsLoaded(let stations):
                 state.isLoading = false

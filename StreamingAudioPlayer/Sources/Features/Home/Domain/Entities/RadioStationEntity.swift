@@ -9,7 +9,7 @@ import Foundation
 
 /// Entity for radio station in domain layer.
 struct RadioStationEntity: Identifiable, Equatable, Hashable {
-    let id: UUID
+    let id: Int
     let name: String
     let imagrUrl: URL
     let streamURL: URL

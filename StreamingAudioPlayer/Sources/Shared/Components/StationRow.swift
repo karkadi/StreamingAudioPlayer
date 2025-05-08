@@ -11,6 +11,8 @@ import CachedAsyncImage
 /// Reusable view for displaying a radio station.
 struct StationRow: View {
     let station: RadioStationEntity
+    let isFavorite: Bool
+    let onFavoriteToggle: () -> Void
 
     var body: some View {
         HStack {
@@ -29,11 +31,18 @@ struct StationRow: View {
                     .resizable()
                     .scaledToFill()
             })
-             .frame(width: 30, height: 30)
+            .frame(width: 30, height: 30)
 
             Text(station.name)
                 .font(.headline)
             Spacer()
+            Button(action: onFavoriteToggle) {
+                Image(systemName: isFavorite ? "star.fill" : "star")
+                    .foregroundStyle(isFavorite ? .yellow : .gray)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(isFavorite ? "Remove from favorites" : "Add to favorites")
+            .accessibilityHint("Toggles favorite status for \(station.name)")
             Image(systemName: "radio")
                 .symbolEffect(.pulse, isActive: true)
         }
@@ -46,10 +55,12 @@ struct StationRow: View {
 }
 
 #Preview {
-    VStack {
-        StationRow(station: RadioStationEntity(id: UUID(),
-                                               name: "Радио 1.FM",
-                                               imagrUrl: URL(string:"https://radiopotok.ru/f/station/512/38.png")!,
-                                               streamURL: URL(string: "https://strm112.1.fm/top40_mobile_mp3")!))
+    let station = RadioStationEntity(id: 1,
+                                     name: "Радио 1.FM",
+                                     imagrUrl: URL(string:"https://radiopotok.ru/f/station/512/38.png")!,
+                                     streamURL: URL(string: "https://strm112.1.fm/top40_mobile_mp3")!)
+  VStack {
+      StationRow(station: station, isFavorite: true, onFavoriteToggle : { } )
+      StationRow(station: station, isFavorite: false, onFavoriteToggle : { } )
     }
 }
