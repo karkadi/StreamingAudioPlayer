@@ -14,25 +14,25 @@ struct HomeReducer {
     struct State: Equatable {
         var stations: [RadioStationEntity] = []
         var favoriteStationIds: [Int] = []
-        var selectedFilter: StationFilter = .all
         var isLoading: Bool = false
         var error: String?
         var playerState: PlayerReducer.State?
-
+        var selectedFilter: StationFilter = .all
+        
         enum StationFilter: String, CaseIterable {
             case all = "All"
             case favorites = "Favorites"
         }
-
+        
         var displayedStations: [RadioStationEntity] {
-                    switch selectedFilter {
-                    case .all:
-                        return stations
-                    case .favorites:
-                        return stations.filter { favoriteStationIds.contains($0.id) }
-                    }
-                }
-
+            switch selectedFilter {
+            case .all:
+                return stations
+            case .favorites:
+                return stations.filter { favoriteStationIds.contains($0.id) }
+            }
+        }
+        
         /// Computed property to provide non-optional player state for scoping.
         var nonOptionalPlayerState: PlayerReducer.State {
             get { playerState ?? PlayerReducer.State(station: RadioStationEntity(id: 1,
@@ -42,7 +42,7 @@ struct HomeReducer {
             set { playerState = newValue }
         }
     }
-
+    
     enum Action {
         case onAppear
         case stationsLoaded([RadioStationEntity])
@@ -54,12 +54,13 @@ struct HomeReducer {
         case toggleFavorite(Int)
         case filterChanged(State.StationFilter)
     }
-
+    
     @Dependency(\.homeUseCase) var homeUseCase
     @Dependency(\.playerUseCase) var playerUseCase
     @Dependency(\.favoriteUseCase) var favoriteUseCase
-
+    
     var body: some Reducer<State, Action> {
+        
         Reduce { state, action in
             switch action {
             case .onAppear:
@@ -78,11 +79,11 @@ struct HomeReducer {
                         print("Failed to load favorites: \(error)")
                     }
                 }
-
+                
             case .favoriteIdsLoaded(let ids):
                 state.favoriteStationIds = ids
                 return .none
-
+                
             case .toggleFavorite(let stationId):
                 let hasFavorite = state.favoriteStationIds.contains(stationId)
                 if hasFavorite {
@@ -105,21 +106,21 @@ struct HomeReducer {
                         }
                     }
                 }
-
+                
             case .filterChanged(let filter):
                 state.selectedFilter = filter
                 return .none
-
+                
             case .stationsLoaded(let stations):
                 state.isLoading = false
                 state.stations = stations
                 return .none
-
+                
             case .failedToLoad(let error):
                 state.isLoading = false
                 state.error = error.localizedDescription
                 return .none
-
+                
             case .playTapped(let station):
                 state.playerState = PlayerReducer.State(station: station, isPlaying: true)
                 return .run { [station] send in
@@ -129,7 +130,7 @@ struct HomeReducer {
                         await send(.player(.playbackFailed(error)))
                     }
                 }
-
+                
             case .pauseTapped:
                 if state.playerState != nil {
                     state.playerState?.isPlaying = false
@@ -138,12 +139,12 @@ struct HomeReducer {
                     }
                 }
                 return .none
-
+                
             case .player(.playbackFailed(let error)):
                 state.playerState?.isPlaying = false
                 state.playerState?.error = error.localizedDescription
                 return .none
-
+                
             case .player:
                 return .none
             }

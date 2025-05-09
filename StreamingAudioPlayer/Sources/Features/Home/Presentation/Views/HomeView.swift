@@ -12,32 +12,32 @@ import ComposableArchitecture
 struct HomeView: View {
     @Bindable private var store: StoreOf<HomeReducer>
     @State private var showAboutView = false
-    @State private var selectedFilter: HomeReducer.State.StationFilter = .all
-
+    
     init(store: StoreOf<HomeReducer>) {
         self.store = store
     }
-
+    
     var body: some View {
         NavigationStack {
             VStack {
-                Picker("Filter", selection: $selectedFilter) {
+                Picker("Filter",
+                       selection: $store.selectedFilter.sending(\.filterChanged)) {
                     ForEach(HomeReducer.State.StationFilter.allCases, id: \.self) { filter in
                         Text(filter.rawValue).tag(filter)
                     }
                 }
-                .pickerStyle(.segmented)
-                .padding()
-                .accessibilityLabel("Station filter")
-                .accessibilityHint("Select to show all stations or only favorites")
-
+                       .pickerStyle(.segmented)
+                       .padding()
+                       .accessibilityLabel("Station filter")
+                       .accessibilityHint("Select to show all stations or only favorites")
+                
                 ZStack(alignment: .bottom) {
                     ScrollView {
                         StationListView(store: store)
                             .contentMargins(.vertical, 16)
                     }
                     .scrollTargetBehavior(.paging)
-
+                    
                     if let playerState = store.playerState {
                         MiniPlayerView(
                             store: store.scope(state: \.nonOptionalPlayerState, action: \.player),
@@ -69,9 +69,6 @@ struct HomeView: View {
             .onAppear {
                 store.send(.onAppear)
             }
-            .onChange(of: selectedFilter) { _, newValue in
-                store.send(.filterChanged(newValue))
-            }
             .navigationDestination(for: RadioStationEntity.self) { station in
                 PlayerView(
                     store: Store(
@@ -85,4 +82,5 @@ struct HomeView: View {
         .dynamicTypeSize(.large...DynamicTypeSize.xxxLarge)
         .animation(.easeInOut, value: store.playerState)
     }
+    
 }
