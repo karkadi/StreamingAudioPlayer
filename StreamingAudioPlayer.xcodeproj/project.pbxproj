@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		5B3148382DCB81F000AFDE0A /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 5B3148372DCB81F000AFDE0A /* CachedAsyncImage */; };
 		5B7D89A02DC01A4100E2AAAB /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5B7D899F2DC01A4100E2AAAB /* ComposableArchitecture */; };
-		5BD924702DC23795005A8BF6 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BBEFF252DC104BE004E2F5D /* WidgetKit.framework */; };
-		5BD924712DC23795005A8BF6 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BBEFF272DC104BE004E2F5D /* SwiftUI.framework */; };
-		5BD9247E2DC23796005A8BF6 /* RadioLiveActivityWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5BD9246F2DC23795005A8BF6 /* RadioLiveActivityWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,13 +26,6 @@
 			remoteGlobalIDString = 5B7D894D2DC018AE00E2AAAB;
 			remoteInfo = StreamingAudioPlayer;
 		};
-		5BD9247C2DC23796005A8BF6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5B7D89462DC018AE00E2AAAB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5BD9246E2DC23795005A8BF6;
-			remoteInfo = RadioLiveActivityWidgetExtension;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,7 +35,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				5BD9247E2DC23796005A8BF6 /* RadioLiveActivityWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -58,8 +47,6 @@
 		5B7D89652DC018B000E2AAAB /* StreamingAudioPlayerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StreamingAudioPlayerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BBEFF252DC104BE004E2F5D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		5BBEFF272DC104BE004E2F5D /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		5BD9246F2DC23795005A8BF6 /* RadioLiveActivityWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RadioLiveActivityWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		5BDAD6912DC3797200701D66 /* RadioLiveActivityWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RadioLiveActivityWidgetExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -70,32 +57,6 @@
 			);
 			target = 5B7D894D2DC018AE00E2AAAB /* StreamingAudioPlayer */;
 		};
-		5BD924822DC23796005A8BF6 /* Exceptions for "RadioLiveActivityWidget" folder in "RadioLiveActivityWidgetExtension" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 5BD9246E2DC23795005A8BF6 /* RadioLiveActivityWidgetExtension */;
-		};
-		5BD924842DC23B6A005A8BF6 /* Exceptions for "RadioLiveActivityWidget" folder in "StreamingAudioPlayer" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Shared/AppGroup.swift,
-				Shared/RadioLiveActivityAttributes.swift,
-				Shared/UserDefaultKey.swift,
-				"Shared/UserDefaults+Extensions.swift",
-			);
-			target = 5B7D894D2DC018AE00E2AAAB /* StreamingAudioPlayer */;
-		};
-		5BDAD69B2DC3E81F00701D66 /* Exceptions for "StreamingAudioPlayer" folder in "RadioLiveActivityWidgetExtension" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Sources/Core/Extensions/URL+Extensions.swift",
-				Sources/Services/Audio/AudioService.swift,
-				Sources/Services/Audio/AudioStateObserver.swift,
-			);
-			target = 5BD9246E2DC23795005A8BF6 /* RadioLiveActivityWidgetExtension */;
-		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -103,7 +64,6 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				5B7058A72DC0F7D200C6C5A3 /* Exceptions for "StreamingAudioPlayer" folder in "StreamingAudioPlayer" target */,
-				5BDAD69B2DC3E81F00701D66 /* Exceptions for "StreamingAudioPlayer" folder in "RadioLiveActivityWidgetExtension" target */,
 			);
 			path = StreamingAudioPlayer;
 			sourceTree = "<group>";
@@ -116,15 +76,6 @@
 		5B7D89682DC018B000E2AAAB /* StreamingAudioPlayerUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = StreamingAudioPlayerUITests;
-			sourceTree = "<group>";
-		};
-		5BD924722DC23795005A8BF6 /* RadioLiveActivityWidget */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				5BD924842DC23B6A005A8BF6 /* Exceptions for "RadioLiveActivityWidget" folder in "StreamingAudioPlayer" target */,
-				5BD924822DC23796005A8BF6 /* Exceptions for "RadioLiveActivityWidget" folder in "RadioLiveActivityWidgetExtension" target */,
-			);
-			path = RadioLiveActivityWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -153,26 +104,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5BD9246C2DC23795005A8BF6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5BD924712DC23795005A8BF6 /* SwiftUI.framework in Frameworks */,
-				5BD924702DC23795005A8BF6 /* WidgetKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		5B7D89452DC018AE00E2AAAB = {
 			isa = PBXGroup;
 			children = (
-				5BDAD6912DC3797200701D66 /* RadioLiveActivityWidgetExtension.entitlements */,
 				5B7D89502DC018AE00E2AAAB /* StreamingAudioPlayer */,
 				5B7D895E2DC018B000E2AAAB /* StreamingAudioPlayerTests */,
 				5B7D89682DC018B000E2AAAB /* StreamingAudioPlayerUITests */,
-				5BD924722DC23795005A8BF6 /* RadioLiveActivityWidget */,
 				5BBEFF242DC104BE004E2F5D /* Frameworks */,
 				5B7D894F2DC018AE00E2AAAB /* Products */,
 			);
@@ -184,7 +124,6 @@
 				5B7D894E2DC018AE00E2AAAB /* StreamingAudioPlayer.app */,
 				5B7D895B2DC018B000E2AAAB /* StreamingAudioPlayerTests.xctest */,
 				5B7D89652DC018B000E2AAAB /* StreamingAudioPlayerUITests.xctest */,
-				5BD9246F2DC23795005A8BF6 /* RadioLiveActivityWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -213,7 +152,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				5BD9247D2DC23796005A8BF6 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				5B7D89502DC018AE00E2AAAB /* StreamingAudioPlayer */,
@@ -273,28 +211,6 @@
 			productReference = 5B7D89652DC018B000E2AAAB /* StreamingAudioPlayerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		5BD9246E2DC23795005A8BF6 /* RadioLiveActivityWidgetExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5BD9247F2DC23796005A8BF6 /* Build configuration list for PBXNativeTarget "RadioLiveActivityWidgetExtension" */;
-			buildPhases = (
-				5BD9246B2DC23795005A8BF6 /* Sources */,
-				5BD9246C2DC23795005A8BF6 /* Frameworks */,
-				5BD9246D2DC23795005A8BF6 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				5BD924722DC23795005A8BF6 /* RadioLiveActivityWidget */,
-			);
-			name = RadioLiveActivityWidgetExtension;
-			packageProductDependencies = (
-			);
-			productName = RadioLiveActivityWidgetExtension;
-			productReference = 5BD9246F2DC23795005A8BF6 /* RadioLiveActivityWidgetExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -315,9 +231,6 @@
 					5B7D89642DC018B000E2AAAB = {
 						CreatedOnToolsVersion = 16.3;
 						TestTargetID = 5B7D894D2DC018AE00E2AAAB;
-					};
-					5BD9246E2DC23795005A8BF6 = {
-						CreatedOnToolsVersion = 16.3;
 					};
 				};
 			};
@@ -342,7 +255,6 @@
 				5B7D894D2DC018AE00E2AAAB /* StreamingAudioPlayer */,
 				5B7D895A2DC018B000E2AAAB /* StreamingAudioPlayerTests */,
 				5B7D89642DC018B000E2AAAB /* StreamingAudioPlayerUITests */,
-				5BD9246E2DC23795005A8BF6 /* RadioLiveActivityWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -363,13 +275,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5B7D89632DC018B000E2AAAB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5BD9246D2DC23795005A8BF6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -400,13 +305,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5BD9246B2DC23795005A8BF6 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -419,11 +317,6 @@
 			isa = PBXTargetDependency;
 			target = 5B7D894D2DC018AE00E2AAAB /* StreamingAudioPlayer */;
 			targetProxy = 5B7D89662DC018B000E2AAAB /* PBXContainerItemProxy */;
-		};
-		5BD9247D2DC23796005A8BF6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5BD9246E2DC23795005A8BF6 /* RadioLiveActivityWidgetExtension */;
-			targetProxy = 5BD9247C2DC23796005A8BF6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -687,64 +580,6 @@
 			};
 			name = Release;
 		};
-		5BD924802DC23796005A8BF6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = RadioLiveActivityWidgetExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = MBM8NLR735;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RadioLiveActivityWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = RadioLiveActivityWidget;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = karkadi.com.StreamingAudioPlayer.RadioLiveActivityWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		5BD924812DC23796005A8BF6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = RadioLiveActivityWidgetExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = MBM8NLR735;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RadioLiveActivityWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = RadioLiveActivityWidget;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = karkadi.com.StreamingAudioPlayer.RadioLiveActivityWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -780,15 +615,6 @@
 			buildConfigurations = (
 				5B7D89762DC018B000E2AAAB /* Debug */,
 				5B7D89772DC018B000E2AAAB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5BD9247F2DC23796005A8BF6 /* Build configuration list for PBXNativeTarget "RadioLiveActivityWidgetExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5BD924802DC23796005A8BF6 /* Debug */,
-				5BD924812DC23796005A8BF6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

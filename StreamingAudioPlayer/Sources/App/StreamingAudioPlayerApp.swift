@@ -10,8 +10,6 @@ import CachedAsyncImage
 
 @main
 struct StreamingAudioPlayerApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-
     var body: some Scene {
         WindowGroup {
             LaunchScreenView()
@@ -26,12 +24,4 @@ struct StreamingAudioPlayerApp: App {
             totalCostLimit: 1_024 * 1_024 * 200 // 200 MB
         )
     }
-}
-
-class AppDelegate: NSObject, UIApplicationDelegate {
-
-    func applicationWillTerminate(_ application: UIApplication) {
-        LiveActivityManager.shared.stopSessionTimeoutAsync()
-    }
-
 }

@@ -21,18 +21,14 @@ final class PlayerRepository: PlayerRepositoryProtocol {
     }
 
     func play(station: RadioStationEntity) async throws {
-        await LiveActivityManager.shared.endLiveActivity()
-        try await AudioService.shared.play(station: station.name, url: station.streamURL)
-        try await LiveActivityManager.shared.startLiveActivity(station: station.name, isPlaying: true)
+        try await AudioService.shared.play(station: station)
     }
 
     func pause() async {
         await AudioService.shared.pause()
-        await LiveActivityManager.shared.endLiveActivity()
     }
 
     func stop() async {
         await AudioService.shared.stop()
-        await LiveActivityManager.shared.endLiveActivity()
     }
 }
