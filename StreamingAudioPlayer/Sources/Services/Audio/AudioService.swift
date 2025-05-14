@@ -9,6 +9,7 @@ import AVKit
 import Foundation
 import OSLog
 import MediaPlayer
+import CachedAsyncImage
 
 /// Service for streaming audio using AVPlayer with background playback and Now Playing support.
 final class AudioService {
@@ -96,32 +97,23 @@ final class AudioService {
 
     /// Updates the Now Playing info for the lock screen/control center.
     @MainActor
-    private func updateNowPlayingInfo() {
+    private func updateNowPlayingInfo() async {
         let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
         var nowPlayingInfo = [String: Any]()
         if state == .playing || state == .paused {
             if let entry = RadioStationEntity.loadStruct(){
-
-                Task {
-                    do {
-                        let (data, _) = try await URLSession.shared.data(from: entry.imagrUrl)
-                        if let image = UIImage(data: data) {
-                            let artwork = MPMediaItemArtwork.init(boundsSize: image.size,
-                                                                  requestHandler: { _ -> UIImage in image })
-                            nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
-
-                            MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
-                        }
-                    } catch {
-                        logger.error("Failed to resume playback: \(error.localizedDescription)")
-                    }
-                }
-
                 nowPlayingInfo[MPMediaItemPropertyTitle] = entry.name
                 nowPlayingInfo[MPMediaItemPropertyMediaType] = MPMediaType.anyAudio.rawValue
                 nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = state == .playing ? 1.0 : 0.0
                 nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = 0.0
                 nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = 0.0
+
+                if let image = ImageCache().wrappedValue[entry.imagrUrl] {
+                    let artwork = MPMediaItemArtwork.init(boundsSize: image.size,
+                                                          requestHandler: { _ -> UIImage in image })
+                    nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
+                    MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+                }
             }
         }
         nowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo.isEmpty ? nil : nowPlayingInfo
