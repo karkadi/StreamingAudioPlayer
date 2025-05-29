@@ -11,17 +11,19 @@ import CachedAsyncImage
 
 /// Mini-player view displayed at the bottom of the main screen with a volume level bar.
 struct MiniPlayerView: View {
-    @Bindable private var store: StoreOf<PlayerReducer>
+    @Bindable private var store: StoreOf<PlayerFeature>
     @State private var audioStateObserver = AudioStateObserver()
     private let station: RadioStationEntity
-
-    init(store: StoreOf<PlayerReducer>, station: RadioStationEntity) {
+    
+    init(store: StoreOf<PlayerFeature>, station: RadioStationEntity) {
         self.store = store
         self.station = station
     }
-
+    
     var body: some View {
-        NavigationLink(value: station) {
+        NavigationLink(state: HomeFeature.Path.State.playerView(
+            PlayerFeature.State(station: station, isPlaying: store.isPlaying)
+        )) {
             HStack {
                 CachedAsyncImage(url: station.imagrUrl.absoluteString,
                                  placeholder: { progress in
@@ -38,20 +40,20 @@ struct MiniPlayerView: View {
                         .resizable()
                         .scaledToFill()
                 })
-                 .frame(width: 30, height: 30)
-
+                .frame(width: 30, height: 30)
+                
                 Text(station.name)
                     .font(.subheadline)
                     .lineLimit(1)
                     .accessibilityLabel("Currently playing \(station.name)")
-
+                
                 Spacer()
-
+                
                 VolumeLevelBar(isPlaying: store.isPlaying)
                     .accessibilityLabel("Playback volume indicator")
                     .accessibilityValue(store.isPlaying ? "Playing" : "Paused")
                     .accessibilityHidden(!store.isPlaying)
-
+                
                 Button(action: {
                     if store.isPlaying {
                         store.send(.pauseTapped)
@@ -81,7 +83,7 @@ struct MiniPlayerView: View {
         .buttonStyle(.plain)
         .accessibilityHint("Tap to view full player")
     }
-
+    
     private func triggerHaptic() {
 #if os(iOS)
         UINotificationFeedbackGenerator().notificationOccurred(.success)
