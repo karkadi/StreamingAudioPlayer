@@ -1,10 +1,9 @@
 {
-  "images" : [
+  "data" : [
     {
-      "filename" : "radio_icon.png",
+      "filename" : "RadioStations.json",
       "idiom" : "universal",
-      "platform" : "ios",
-      "size" : "1024x1024"
+      "universal-type-identifier" : "public.json"
     }
   ],
   "info" : {

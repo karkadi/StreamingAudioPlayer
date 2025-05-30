@@ -7,9 +7,11 @@
 
 import ComposableArchitecture
 import Foundation
+import OSLog
 
 @Reducer
 struct HomeFeature {
+    private let logger = Logger(subsystem: "karkadi.com.StreamingAudioPlayer", category: "HomeFeature")
 
     @Reducer(state: .equatable)
     enum Path {
@@ -89,7 +91,7 @@ struct HomeFeature {
                         let favoriteIds = try await databaseClient.getFavoriteStationIds()
                         await send(.favoriteIdsLoaded(favoriteIds))
                     } catch {
-                        print("Failed to load favorites: \(error)")
+                        logger.error("Failed to load favorites: \(error)")
                         await send(.failedToLoad(error))
                     }
                 }
@@ -110,13 +112,13 @@ struct HomeFeature {
                         do {
                             try await databaseClient.removeFavorite(stationId: stationId)
                         } catch {
-                            print("Failed to remove favorite: \(error)")
+                            logger.error("Failed to remove favorite: \(error)")
                         }
                     } else {
                         do {
                             try await databaseClient.addFavorite(stationId: stationId)
                         } catch {
-                            print("Failed to add favorite: \(error)")
+                            logger.error("Failed to add favorite: \(error)")
                         }
                     }
                 }

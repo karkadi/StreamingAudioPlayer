@@ -14,7 +14,7 @@ protocol PlayerClient {
 }
 
 // MARK: - Live Implementation
-class DefaultPlayerClient: PlayerClient {
+final class DefaultPlayerClient: PlayerClient {
     func play(station: RadioStationEntity) async throws {
         try await AudioService.shared.play(station: station)
     }

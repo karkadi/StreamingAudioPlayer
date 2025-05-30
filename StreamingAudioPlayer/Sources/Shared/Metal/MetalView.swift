@@ -8,8 +8,10 @@
 import ComposableArchitecture
 import MetalKit
 import SwiftUI
+import OSLog
 
 struct MetalView: UIViewRepresentable {
+    private let logger = Logger(subsystem: "karkadi.com.StreamingAudioPlayer", category: "MetalView")
     let renderingClient: any MetalRenderingClient
 
     init?(fragmentFunction: String) {
@@ -31,7 +33,7 @@ struct MetalView: UIViewRepresentable {
         do {
             try renderingClient.configure(mtkView: mtkView)
         } catch {
-            print("Failed to configure MetalView: \(error)")
+            logger.error("Failed to configure MetalView: \(error)")
         }
 
         let panGesture = UIPanGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handlePan))

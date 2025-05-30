@@ -9,9 +9,9 @@ import ComposableArchitecture
 // MARK: - Dependency Keys
 enum AboutClientKey: DependencyKey {
     static let liveValue = AboutInfoModel(
-        appName: "InstagramLikeApp",
+        appName: "StreamingAudioPlayer",
         creator: "Arkadiy KAZAZYAN",
-        creationDate: "April 10, 2025"
+        creationDate: "May 29, 2025"
     )
 }
 
