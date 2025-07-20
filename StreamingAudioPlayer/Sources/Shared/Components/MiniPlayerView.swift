@@ -11,18 +11,18 @@ import CachedAsyncImage
 
 /// Mini-player view displayed at the bottom of the main screen with a volume level bar.
 struct MiniPlayerView: View {
-    @Bindable private var store: StoreOf<PlayerFeature>
+    @Bindable private var store: StoreOf<PlayerReducer>
     @State private var audioStateObserver = AudioStateObserver()
     private let station: RadioStationEntity
     
-    init(store: StoreOf<PlayerFeature>, station: RadioStationEntity) {
+    init(store: StoreOf<PlayerReducer>, station: RadioStationEntity) {
         self.store = store
         self.station = station
     }
     
     var body: some View {
-        NavigationLink(state: HomeFeature.Path.State.playerView(
-            PlayerFeature.State(station: station, isPlaying: store.isPlaying)
+        NavigationLink(state: RootReducer.Path.State.player(
+            PlayerReducer.State(station: station, isPlaying: store.isPlaying)
         )) {
             HStack {
                 CachedAsyncImage(url: station.imagrUrl.absoluteString,

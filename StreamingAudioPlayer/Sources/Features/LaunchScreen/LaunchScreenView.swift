@@ -9,10 +9,10 @@ import ComposableArchitecture
 import SwiftUI
 
 struct LaunchScreenView: View {
-    let store: StoreOf<LaunchScreenFeature>
+    let store: StoreOf<LaunchScreenReducer>
 
     init() {
-        self.store = Store(initialState: LaunchScreenFeature.State()) { LaunchScreenFeature() }
+        self.store = Store(initialState: LaunchScreenReducer.State()) { LaunchScreenReducer() }
     }
 
     var body: some View {
@@ -28,11 +28,9 @@ struct LaunchScreenView: View {
             landingScreen
 
         case .appScreen:
-            HomeView(
-                store: Store(
-                    initialState: HomeFeature.State(),
-                    reducer: { HomeFeature() }
-                )
+            RootView( store: Store( initialState: RootReducer.State(),
+                                    reducer: { RootReducer() }
+                                  )
             )
         }
     }

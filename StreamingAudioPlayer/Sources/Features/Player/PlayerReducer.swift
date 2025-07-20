@@ -1,5 +1,5 @@
 //
-//  PlayerFeature.swift
+//  PlayerReducer.swift
 //  StreamingAudioPlayer
 //
 //  Created by Arkadiy KAZAZYAN on 28/04/2025.
@@ -9,7 +9,7 @@ import ComposableArchitecture
 import Foundation
 
 @Reducer
-struct PlayerFeature {
+struct PlayerReducer {
     @ObservableState
     struct State: Equatable {
         let station: RadioStationEntity

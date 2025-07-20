@@ -1,5 +1,5 @@
 //
-//  LaunchScreenFeature.swift
+//  LaunchScreenReducer.swift
 //  InstagramLikeApp
 //
 //  Created by Arkadiy KAZAZYAN on 06/04/2025.
@@ -8,7 +8,7 @@
 import ComposableArchitecture
 
 @Reducer
-struct LaunchScreenFeature {
+struct LaunchScreenReducer {
     // MARK: - State
     @ObservableState
     struct State: Equatable {

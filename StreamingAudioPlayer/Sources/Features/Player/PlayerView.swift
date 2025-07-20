@@ -11,10 +11,10 @@ import CachedAsyncImage
 
 /// Full-screen player view for controlling playback.
 struct PlayerView: View {
-    @Bindable private var store: StoreOf<PlayerFeature>
+    @Bindable private var store: StoreOf<PlayerReducer>
     @State private var audioStateObserver = AudioStateObserver()
 
-    init(store: StoreOf<PlayerFeature>) {
+    init(store: StoreOf<PlayerReducer>) {
         self.store = store
     }
 
@@ -96,8 +96,8 @@ struct PlayerView: View {
                                      streamURL: URL(string: "https://strm112.1.fm/top40_mobile_mp3")!)
     PlayerView(
         store: Store(
-            initialState: PlayerFeature.State(station: station),
-            reducer: { PlayerFeature() }
+            initialState: PlayerReducer.State(station: station),
+            reducer: { PlayerReducer() }
         )
     )
 }

@@ -1,5 +1,5 @@
 //
-//  AboutViewFeature.swift
+//  AboutReducer.swift
 //  InstagramLikeApp
 //
 //  Created by Arkadiy KAZAZYAN on 08/04/2025.
@@ -8,7 +8,7 @@
 import ComposableArchitecture
 
 @Reducer
-struct AboutViewFeature {
+struct AboutReducer {
     // MARK: - Dependencies
     @Dependency(\.aboutClient) private var aboutClient
 

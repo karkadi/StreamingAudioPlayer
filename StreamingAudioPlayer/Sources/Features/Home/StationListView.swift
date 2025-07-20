@@ -10,9 +10,9 @@ import ComposableArchitecture
 
 /// Subview for displaying the list of radio stations.
 struct StationListView: View {
-    @Bindable private var store: StoreOf<HomeFeature>
+    @Bindable private var store: StoreOf<HomeReducer>
 
-    init(store: StoreOf<HomeFeature>) {
+    init(store: StoreOf<HomeReducer>) {
         self.store = store
     }
 

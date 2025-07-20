@@ -11,11 +11,7 @@ import SwiftUI
 struct AboutView: View {
     @Environment(\.dismiss) private var dismiss
 
-    let store: StoreOf<AboutViewFeature>
-
-    init() {
-        self.store = Store( initialState: AboutViewFeature.State()) { AboutViewFeature() }
-    }
+    let store: StoreOf<AboutReducer>
 
     var body: some View {
         ZStack {
@@ -51,5 +47,5 @@ struct AboutView: View {
 }
 
 #Preview {
-    AboutView()
+    AboutView(store: Store( initialState: AboutReducer.State()) { AboutReducer() })
 }

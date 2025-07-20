@@ -1,5 +1,5 @@
 //
-//  HomeFeature.swift
+//  HomeReducer.swift
 //  StreamingAudioPlayer
 //
 //  Created by Arkadiy KAZAZYAN on 28/04/2025.
@@ -10,12 +10,12 @@ import Foundation
 import OSLog
 
 @Reducer
-struct HomeFeature {
-    private let logger = Logger(subsystem: "karkadi.com.StreamingAudioPlayer", category: "HomeFeature")
+struct HomeReducer {
+    private let logger = Logger(subsystem: "karkadi.com.StreamingAudioPlayer", category: "HomeReducer")
 
     @Reducer(state: .equatable)
     enum Path {
-        case playerView(PlayerFeature)
+        case playerView(PlayerReducer)
         case aboutView
     }
 
@@ -26,9 +26,8 @@ struct HomeFeature {
         var favoriteStationIds: [Int] = []
         var isLoading: Bool = false
         var error: String?
-        var playerState: PlayerFeature.State?
+        var playerState: PlayerReducer.State?
         var selectedFilter: StationFilter = .all
-        var path = StackState<Path.State>()
 
         enum StationFilter: String, CaseIterable {
             case all = "All"
@@ -45,8 +44,8 @@ struct HomeFeature {
         }
 
         /// Computed property to provide non-optional player state for scoping.
-        var nonOptionalPlayerState: PlayerFeature.State {
-            get { playerState ?? PlayerFeature.State(station: RadioStationEntity(id: 1,
+        var nonOptionalPlayerState: PlayerReducer.State {
+            get { playerState ?? PlayerReducer.State(station: RadioStationEntity(id: 1,
                                                                                  name: "Радио 1.FM",
                                                                                  imagrUrl: URL(string:"https://radiopotok.ru/f/station/512/38.png")!,
                                                                                  streamURL: URL(string: "https://strm112.1.fm/top40_mobile_mp3")!)) }
@@ -55,21 +54,22 @@ struct HomeFeature {
     }
 
     enum Action: ViewAction {
-        case view(View)
-        case path(StackActionOf<Path>)
 
         case stationsLoaded([RadioStationEntity])
         case failedToLoad(Error)
-        case player(PlayerFeature.Action)
+        case player(PlayerReducer.Action)
         case playTapped(RadioStationEntity)
         case pauseTapped
         case favoriteIdsLoaded([Int])
         case toggleFavorite(Int)
         case filterChanged(State.StationFilter)
 
+        case view(View)
+
         enum View {
             case onAppear
-            case showAbout
+            case navigateToPlayer(RadioStationEntity)
+            case navigateToAbout
         }
     }
 
@@ -138,7 +138,7 @@ struct HomeFeature {
                 return .none
 
             case .playTapped(let station):
-                state.playerState = PlayerFeature.State(station: station, isPlaying: true)
+                state.playerState = PlayerReducer.State(station: station, isPlaying: true)
                 return .run { [station] send in
                     do {
                         try await playerClient.play(station: station)
@@ -164,17 +164,13 @@ struct HomeFeature {
             case .player:
                 return .none
 
-            case .path:
+            case .view(.navigateToPlayer), .view(.navigateToAbout):
                 return .none
-                
-            case .view(.showAbout):
-                state.path.append(.aboutView)
-                return .none
+
             }
         }
-        .forEach(\.path, action: \.path)
         .ifLet(\.playerState, action: \.player) {
-            PlayerFeature()
+            PlayerReducer()
         }
         ._printChanges()
     }
