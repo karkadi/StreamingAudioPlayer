@@ -13,12 +13,13 @@ struct LaunchScreenReducer {
     @ObservableState
     struct State: Equatable {
         var entity: Screen = .splashScreen
-
+        // swiftlint:disable nesting
         enum Screen {
             case splashScreen
             case landingScreen
             case appScreen
         }
+        // swiftlint:enable nesting
     }
 
     // MARK: - Action

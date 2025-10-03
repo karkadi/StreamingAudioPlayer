@@ -47,6 +47,7 @@ struct RootReducer {
     // MARK: - Path Reducer
     @Reducer
     struct Path {
+        // swiftlint:disable nesting
         @ObservableState
         enum State: Equatable {
             case player(PlayerReducer.State)
@@ -57,7 +58,7 @@ struct RootReducer {
             case player(PlayerReducer.Action)
             case about(AboutReducer.Action)
         }
-
+        // swiftlint:enable nesting
         var body: some Reducer<State, Action> {
             Scope(state: \.player, action: \.player) {
                 PlayerReducer()

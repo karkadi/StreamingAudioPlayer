@@ -15,7 +15,7 @@ struct AboutReducer {
     // MARK: - State
     @ObservableState
     struct State: Equatable {
-        var aboutInfo = AboutInfoModel(appName: "", creator: "", creationDate: "")
+        var aboutInfo: AboutInfoModel?
     }
 
     // MARK: - Actions

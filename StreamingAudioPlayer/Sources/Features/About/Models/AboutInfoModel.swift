@@ -6,7 +6,7 @@
 //
 
 // Domain Layer: Entities
-struct AboutInfoModel: Equatable {
+struct AboutInfoModel: Equatable, Sendable {
     let appName: String
     let creator: String
     let creationDate: String

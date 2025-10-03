@@ -45,8 +45,7 @@
 		5B7D894E2DC018AE00E2AAAB /* StreamingAudioPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StreamingAudioPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B7D895B2DC018B000E2AAAB /* StreamingAudioPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StreamingAudioPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B7D89652DC018B000E2AAAB /* StreamingAudioPlayerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StreamingAudioPlayerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5BBEFF252DC104BE004E2F5D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
-		5BBEFF272DC104BE004E2F5D /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		5BA15A122E907010006F73AB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -54,8 +53,26 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				Sources/Tests/UITests/StreamingAudioPlayerUITests.swift,
+				Sources/Tests/UITests/StreamingAudioPlayerUITestsLaunchTests.swift,
+				Sources/Tests/UnitTests/StreamingAudioPlayerTests.swift,
 			);
 			target = 5B7D894D2DC018AE00E2AAAB /* StreamingAudioPlayer */;
+		};
+		5BA15A0F2E9042A9006F73AB /* Exceptions for "StreamingAudioPlayer" folder in "StreamingAudioPlayerTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Sources/Tests/UnitTests/StreamingAudioPlayerTests.swift,
+			);
+			target = 5B7D895A2DC018B000E2AAAB /* StreamingAudioPlayerTests */;
+		};
+		5BA15A102E9042A9006F73AB /* Exceptions for "StreamingAudioPlayer" folder in "StreamingAudioPlayerUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Sources/Tests/UITests/StreamingAudioPlayerUITests.swift,
+				Sources/Tests/UITests/StreamingAudioPlayerUITestsLaunchTests.swift,
+			);
+			target = 5B7D89642DC018B000E2AAAB /* StreamingAudioPlayerUITests */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -64,18 +81,10 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				5B7058A72DC0F7D200C6C5A3 /* Exceptions for "StreamingAudioPlayer" folder in "StreamingAudioPlayer" target */,
+				5BA15A0F2E9042A9006F73AB /* Exceptions for "StreamingAudioPlayer" folder in "StreamingAudioPlayerTests" target */,
+				5BA15A102E9042A9006F73AB /* Exceptions for "StreamingAudioPlayer" folder in "StreamingAudioPlayerUITests" target */,
 			);
 			path = StreamingAudioPlayer;
-			sourceTree = "<group>";
-		};
-		5B7D895E2DC018B000E2AAAB /* StreamingAudioPlayerTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = StreamingAudioPlayerTests;
-			sourceTree = "<group>";
-		};
-		5B7D89682DC018B000E2AAAB /* StreamingAudioPlayerUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = StreamingAudioPlayerUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -111,10 +120,8 @@
 			isa = PBXGroup;
 			children = (
 				5B7D89502DC018AE00E2AAAB /* StreamingAudioPlayer */,
-				5B7D895E2DC018B000E2AAAB /* StreamingAudioPlayerTests */,
-				5B7D89682DC018B000E2AAAB /* StreamingAudioPlayerUITests */,
-				5BBEFF242DC104BE004E2F5D /* Frameworks */,
 				5B7D894F2DC018AE00E2AAAB /* Products */,
+				5BA15A122E907010006F73AB /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -128,15 +135,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5BBEFF242DC104BE004E2F5D /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				5BBEFF252DC104BE004E2F5D /* WidgetKit.framework */,
-				5BBEFF272DC104BE004E2F5D /* SwiftUI.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -148,6 +146,7 @@
 				5B7D894B2DC018AE00E2AAAB /* Frameworks */,
 				5B7D894C2DC018AE00E2AAAB /* Resources */,
 				5BBEFF3E2DC104BF004E2F5D /* Embed Foundation Extensions */,
+				5BA15A132E907084006F73AB /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -178,9 +177,6 @@
 			dependencies = (
 				5B7D895D2DC018B000E2AAAB /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				5B7D895E2DC018B000E2AAAB /* StreamingAudioPlayerTests */,
-			);
 			name = StreamingAudioPlayerTests;
 			packageProductDependencies = (
 			);
@@ -201,9 +197,6 @@
 			dependencies = (
 				5B7D89672DC018B000E2AAAB /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				5B7D89682DC018B000E2AAAB /* StreamingAudioPlayerUITests */,
-			);
 			name = StreamingAudioPlayerUITests;
 			packageProductDependencies = (
 			);
@@ -219,7 +212,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1630;
-				LastUpgradeCheck = 1630;
+				LastUpgradeCheck = 2610;
 				TargetAttributes = {
 					5B7D894D2DC018AE00E2AAAB = {
 						CreatedOnToolsVersion = 16.3;
@@ -282,6 +275,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5BA15A132E907084006F73AB /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(BUILD_DIR)/swiftlint_output.log",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -x \"/opt/homebrew/bin/swiftlint\" ]; then\n  CONFIG_PATH=\"${PROJECT_DIR}/.swiftlint.yml\"\n  SWIFTLINT_OUTPUT=\"${PROJECT_DIR}/swiftlint_output.log\"\n  \n  # Run SwiftLint only on modified files if possible\n  if [ -f \"$CONFIG_PATH\" ]; then\n    /opt/homebrew/bin/swiftlint --config \"$CONFIG_PATH\" --quiet > \"$SWIFTLINT_OUTPUT\" 2>&1\n  else\n    /opt/homebrew/bin/swiftlint --quiet > \"$SWIFTLINT_OUTPUT\" 2>&1\n  fi\n  \n  # Check results\n  if [ -s \"$SWIFTLINT_OUTPUT\" ]; then\n    echo \"SwiftLint issues detected:\"\n    cat \"$SWIFTLINT_OUTPUT\"\n  fi\n  \nelse\n  echo \"warning: SwiftLint not found at /opt/homebrew/bin/swiftlint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5B7D894A2DC018AE00E2AAAB /* Sources */ = {
@@ -380,8 +395,10 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -437,7 +454,9 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -451,16 +470,17 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = MBM8NLR735;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StreamingAudioPlayer/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -470,7 +490,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -484,16 +505,17 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = MBM8NLR735;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StreamingAudioPlayer/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -503,7 +525,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -521,7 +544,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = amongus.com.StreamingAudioPlayerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StreamingAudioPlayer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/StreamingAudioPlayer";
 			};
@@ -540,7 +564,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = amongus.com.StreamingAudioPlayerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StreamingAudioPlayer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/StreamingAudioPlayer";
 			};
@@ -557,7 +582,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = amongus.com.StreamingAudioPlayerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = StreamingAudioPlayer;
 			};
@@ -574,7 +600,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = amongus.com.StreamingAudioPlayerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = StreamingAudioPlayer;
 			};

@@ -9,8 +9,6 @@ import ComposableArchitecture
 import SwiftUI
 
 struct AboutView: View {
-    @Environment(\.dismiss) private var dismiss
-
     let store: StoreOf<AboutReducer>
 
     var body: some View {
@@ -20,19 +18,21 @@ struct AboutView: View {
             VStack(spacing: 16) {
                 Spacer()
 
-                VStack(spacing: 28) {
-                    Text(store.aboutInfo.appName)
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-
-                    Text(store.aboutInfo.creator)
-                        .font(.headline)
-                        .foregroundColor(.white)
-
-                    Text(store.aboutInfo.creationDate)
-                        .font(.subheadline)
-                        .foregroundColor(.white)
+                if let aboutInfo = store.aboutInfo {
+                    VStack(spacing: 28) {
+                        Text(aboutInfo.appName)
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                        
+                        Text(aboutInfo.creator)
+                            .font(.headline)
+                            .foregroundColor(.white)
+                        
+                        Text(aboutInfo.creationDate)
+                            .font(.subheadline)
+                            .foregroundColor(.white)
+                    }
                 }
                 Spacer()
             }

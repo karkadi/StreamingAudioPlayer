@@ -9,6 +9,7 @@ import Foundation
 import OSLog
 
 /// Entity for radio station in domain layer.
+@MainActor
 struct RadioStationEntity: Identifiable, Equatable, Hashable, Codable {
 
     let id: Int
