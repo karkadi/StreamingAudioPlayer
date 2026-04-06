@@ -13,7 +13,7 @@ import OSLog
 struct HomeReducer {
     private let logger = Logger(subsystem: "karkadi.com.StreamingAudioPlayer", category: "HomeReducer")
     
-    @Reducer(state: .equatable)
+    @Reducer
     enum Path {
         case playerView(PlayerReducer)
         case aboutView
@@ -106,7 +106,7 @@ struct HomeReducer {
                         do {
                             try await playerClient.play(station)
                         } catch {
-                            await send(.player(.playbackFailed(error)))
+                            await send(.player(.playbackFailed(error.localizedDescription)))
                         }
                     }
                     
@@ -160,9 +160,9 @@ struct HomeReducer {
                 }
                 return .none
                 
-            case .player(.playbackFailed(let error)):
+            case .player(.playbackFailed(let message)):
                 state.playerState?.isPlaying = false
-                state.playerState?.error = error.localizedDescription
+                state.playerState?.error = message
                 return .none
                 
             case .player:

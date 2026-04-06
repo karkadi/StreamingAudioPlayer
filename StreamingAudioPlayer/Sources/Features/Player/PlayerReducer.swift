@@ -9,20 +9,20 @@ import ComposableArchitecture
 import Foundation
 
 @Reducer
-struct PlayerReducer {
+struct PlayerReducer: Sendable {
     @ObservableState
-    struct State: Equatable {
+    struct State: Equatable, Sendable {
         let station: RadioStationEntity
         var isPlaying: Bool = false
         var error: String?
     }
     
-    enum Action: ViewAction {
-        case playbackFailed(Error)
+    enum Action: ViewAction, Sendable {
+        case playbackFailed(String)
 
         case view(View)
         // swiftlint:disable nesting
-        enum View {
+        enum View: Sendable {
             case playTapped
             case pauseTapped
             case stopTapped
@@ -44,7 +44,7 @@ struct PlayerReducer {
                         do {
                             try await playerClient.play(station)
                         } catch {
-                            await send(.playbackFailed(error))
+                            await send(.playbackFailed(error.localizedDescription))
                         }
                     }
                     
@@ -66,14 +66,13 @@ struct PlayerReducer {
                     
                 }
             
-            case .playbackFailed(let error):
+            case .playbackFailed(let message):
                 state.isPlaying = false
-                state.error = error.localizedDescription
+                state.error = message
                 return .run { _ in
                     await playerClient.stop()
                 }
             }
-            
         }
     }
 }

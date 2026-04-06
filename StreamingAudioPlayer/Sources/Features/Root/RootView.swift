@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - Views
 struct RootView: View {
     @Bindable var store: StoreOf<RootReducer>
-
+    
     var body: some View {
         NavigationStack(
             path: $store.scope(state: \.path, action: \.path)
@@ -19,13 +19,12 @@ struct RootView: View {
         } destination: { store in
             switch store.state {
             case .about:
-                IfLetStore(store.scope(state: \.about, action: \.about)) {
-                    AboutView(store: $0)
+                if let store = store.scope(state: \.about, action: \.about) {
+                    AboutView(store: store)
                 }
-
             case .player:
-                IfLetStore(store.scope(state: \.player, action: \.player) ) {
-                    PlayerView(store: $0)
+                if let store = store.scope(state: \.player, action: \.player) {
+                    PlayerView(store: store)
                 }
             }
         }

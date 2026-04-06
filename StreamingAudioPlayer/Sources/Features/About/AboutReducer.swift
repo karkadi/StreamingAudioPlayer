@@ -8,18 +8,18 @@
 import ComposableArchitecture
 
 @Reducer
-struct AboutReducer {
+struct AboutReducer: Sendable {
     // MARK: - Dependencies
     @Dependency(\.aboutClient) private var aboutClient
 
     // MARK: - State
     @ObservableState
-    struct State: Equatable {
+    struct State: Equatable, Sendable {
         var aboutInfo: AboutInfoModel?
     }
 
     // MARK: - Actions
-    enum Action {
+    enum Action: Sendable {
         case onAppear
     }
 

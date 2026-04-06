@@ -11,7 +11,7 @@ import ComposableArchitecture
 @Reducer
 struct RootReducer {
     @ObservableState
-    struct State: Equatable {
+    struct State {
         var path = StackState<Path.State>()
         var main = HomeReducer.State()
     }
@@ -39,33 +39,14 @@ struct RootReducer {
                 return .none
             }
         }
-        .forEach(\.path, action: \.path) {
-            Path()
-        }
+        .forEach(\.path, action: \.path) 
     }
 
     // MARK: - Path Reducer
     @Reducer
-    struct Path {
-        // swiftlint:disable nesting
-        @ObservableState
-        enum State: Equatable {
-            case player(PlayerReducer.State)
-            case about(AboutReducer.State)
-        }
-
-        enum Action {
-            case player(PlayerReducer.Action)
-            case about(AboutReducer.Action)
-        }
-        // swiftlint:enable nesting
-        var body: some Reducer<State, Action> {
-            Scope(state: \.player, action: \.player) {
-                PlayerReducer()
-            }
-            Scope(state: \.about, action: \.about) {
-                AboutReducer()
-            }
-        }
+    enum Path {
+        case player(PlayerReducer)
+        case about(AboutReducer)
     }
+    
 }

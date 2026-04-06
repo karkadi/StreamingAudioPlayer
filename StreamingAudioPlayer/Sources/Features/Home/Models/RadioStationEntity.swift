@@ -9,8 +9,7 @@ import Foundation
 import OSLog
 
 /// Entity for radio station in domain layer.
-@MainActor
-struct RadioStationEntity: Identifiable, Equatable, Hashable, Codable {
+struct RadioStationEntity: Identifiable, Equatable, Hashable, Codable, Sendable {
 
     let id: Int
     let name: String
@@ -18,6 +17,7 @@ struct RadioStationEntity: Identifiable, Equatable, Hashable, Codable {
     let streamURL: URL
 
     // Save to UserDefaults
+    @MainActor
     func saveStruct() {
         do {
             let data = try JSONEncoder().encode(self)
@@ -28,7 +28,8 @@ struct RadioStationEntity: Identifiable, Equatable, Hashable, Codable {
     }
 
     // Load from UserDefaults
-   static func loadStruct() -> RadioStationEntity? {
+    @MainActor
+    static func loadStruct() -> RadioStationEntity? {
         guard let data = UserDefaults.appGroup.data(forKey: UserDefaultKey.radioStationEntity) else { return nil }
         do {
             return try JSONDecoder().decode(RadioStationEntity.self, from: data)
