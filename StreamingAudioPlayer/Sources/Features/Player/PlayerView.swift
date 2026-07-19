@@ -81,7 +81,9 @@ struct PlayerView: View {
         }
         .offset(y: -100)
         .containerRelativeFrame(.vertical)
+#if (os(iOS))
         .navigationBarTitle("Player", displayMode: .inline)
+#endif
         .dynamicTypeSize(.large...DynamicTypeSize.xxxLarge)
         .sensoryFeedback(.impact, trigger: store.isPlaying)
         .onAppear {

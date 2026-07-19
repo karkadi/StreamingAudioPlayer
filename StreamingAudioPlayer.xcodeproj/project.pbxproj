@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5B3148382DCB81F000AFDE0A /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 5B3148372DCB81F000AFDE0A /* CachedAsyncImage */; };
-		5B7D89A02DC01A4100E2AAAB /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5B7D899F2DC01A4100E2AAAB /* ComposableArchitecture */; };
+		5BAF1D4B2FFE621A003BBD6E /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5BAF1D4A2FFE621A003BBD6E /* ComposableArchitecture */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,7 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B7D89A02DC01A4100E2AAAB /* ComposableArchitecture in Frameworks */,
+				5BAF1D4B2FFE621A003BBD6E /* ComposableArchitecture in Frameworks */,
 				5B3148382DCB81F000AFDE0A /* CachedAsyncImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -157,8 +157,8 @@
 			);
 			name = StreamingAudioPlayer;
 			packageProductDependencies = (
-				5B7D899F2DC01A4100E2AAAB /* ComposableArchitecture */,
 				5B3148372DCB81F000AFDE0A /* CachedAsyncImage */,
+				5BAF1D4A2FFE621A003BBD6E /* ComposableArchitecture */,
 			);
 			productName = StreamingAudioPlayer;
 			productReference = 5B7D894E2DC018AE00E2AAAB /* StreamingAudioPlayer.app */;
@@ -237,8 +237,8 @@
 			mainGroup = 5B7D89452DC018AE00E2AAAB;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				5B7D899E2DC01A4100E2AAAB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				5B3148362DCB81F000AFDE0A /* XCRemoteSwiftPackageReference "CachedAsyncImage" */,
+				5BAF1D492FFE621A003BBD6E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5B7D894F2DC018AE00E2AAAB /* Products */;
@@ -492,11 +492,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = karkadi.com.StreamingAudioPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3";
 			};
 			name = Debug;
 		};
@@ -529,11 +531,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = karkadi.com.StreamingAudioPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3";
 			};
 			name = Release;
 		};
@@ -663,12 +667,12 @@
 				minimumVersion = 2.6.0;
 			};
 		};
-		5B7D899E2DC01A4100E2AAAB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+		5BAF1D492FFE621A003BBD6E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.19.1;
+				minimumVersion = 1.26.0;
 			};
 			traits = (
 			);
@@ -681,9 +685,9 @@
 			package = 5B3148362DCB81F000AFDE0A /* XCRemoteSwiftPackageReference "CachedAsyncImage" */;
 			productName = CachedAsyncImage;
 		};
-		5B7D899F2DC01A4100E2AAAB /* ComposableArchitecture */ = {
+		5BAF1D4A2FFE621A003BBD6E /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5B7D899E2DC01A4100E2AAAB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			package = 5BAF1D492FFE621A003BBD6E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
 		};
 /* End XCSwiftPackageProductDependency section */

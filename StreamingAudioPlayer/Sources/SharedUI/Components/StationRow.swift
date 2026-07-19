@@ -13,6 +13,8 @@ struct StationRow: View {
     let station: RadioStationEntity
     let isFavorite: Bool
     let onFavoriteToggle: () -> Void
+    var onEdit: (() -> Void)?
+    var onDelete: (() -> Void)?
 
     var body: some View {
         HStack {
@@ -52,6 +54,22 @@ struct StationRow: View {
         .contentMargins(.horizontal, 16)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(station.name)
+        .contextMenu {
+            if let onEdit {
+                Button {
+                    onEdit()
+                } label: {
+                    Label("Edit", systemImage: "pencil")
+                }
+            }
+            if let onDelete {
+                Button(role: .destructive) {
+                    onDelete()
+                } label: {
+                    Label("Delete", systemImage: "trash")
+                }
+            }
+        }
     }
 }
 
@@ -61,7 +79,7 @@ struct StationRow: View {
                                      imagrUrl: URL(string: "https://radiopotok.ru/f/station/512/38.png")!,
                                      streamURL: URL(string: "https://strm112.1.fm/top40_mobile_mp3")!)
   VStack {
-      StationRow(station: station, isFavorite: true, onFavoriteToggle: { })
-      StationRow(station: station, isFavorite: false, onFavoriteToggle: { })
+      StationRow(station: station, isFavorite: true, onFavoriteToggle: { }, onEdit: { }, onDelete: { })
+      StationRow(station: station, isFavorite: false, onFavoriteToggle: { }, onEdit: { }, onDelete: { })
     }
 }

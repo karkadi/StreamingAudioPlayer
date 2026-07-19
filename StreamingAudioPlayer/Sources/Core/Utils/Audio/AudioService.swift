@@ -36,7 +36,7 @@ final class AudioService {
     
     init() {
         Task {
-            setupAudioSession()
+            await setupAudioSession()
         }
     }
     
@@ -50,16 +50,66 @@ final class AudioService {
     
     /// Configures the audio session and remote command center for background playback.
     @MainActor
-    private func setupAudioSession() {
+    private func setupAudioSession() async {
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
-            try AVAudioSession.sharedInstance().setActive(true)
+            try await setAudioSessionActive(true)
             state = .stopped
             logger.info("Audio session configured for background playback")
             setupRemoteCommandCenter()
         } catch {
             state = .disabled
             logger.error("Failed to configure audio session: \(error.localizedDescription)")
+        }
+    }
+    
+    /// Activates or deactivates the audio session without blocking the main actor.
+    private func setAudioSessionActive(_ active: Bool) async throws {
+        if #available(iOS 27.0, tvOS 27.0, watchOS 27.0, visionOS 27.0, *) {
+            try await setAudioSessionActiveWithCompletionHandler(active)
+        } else {
+            try await Task.detached(priority: .userInitiated) {
+                try AVAudioSession.sharedInstance().setActive(active)
+            }.value
+        }
+    }
+
+    @available(iOS 27.0, tvOS 27.0, watchOS 27.0, visionOS 27.0, *)
+    private func setAudioSessionActiveWithCompletionHandler(_ active: Bool) async throws {
+        if active {
+            try await activateAudioSessionWithCompletionHandler()
+        } else {
+            try await deactivateAudioSessionWithCompletionHandler()
+        }
+    }
+
+    @available(iOS 27.0, tvOS 27.0, watchOS 27.0, visionOS 27.0, *)
+    private func activateAudioSessionWithCompletionHandler() async throws {
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            AVAudioSession.sharedInstance().activate(options: []) { activated, error in
+                if let error {
+                    continuation.resume(throwing: error)
+                } else if activated {
+                    continuation.resume()
+                } else {
+                    continuation.resume(throwing: AudioError.activationFailed)
+                }
+            }
+        }
+    }
+
+    @available(iOS 27.0, tvOS 27.0, watchOS 27.0, visionOS 27.0, *)
+    private func deactivateAudioSessionWithCompletionHandler() async throws {
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            AVAudioSession.sharedInstance().deactivate(options: []) { deactivated, error in
+                if let error {
+                    continuation.resume(throwing: error)
+                } else if deactivated {
+                    continuation.resume()
+                } else {
+                    continuation.resume(throwing: AudioError.deactivationFailed)
+                }
+            }
         }
     }
     
@@ -150,7 +200,7 @@ final class AudioService {
         player.replaceCurrentItem(with: nil)
         UserDefaults.appGroup.removeObject(forKey: UserDefaultKey.radioStationEntity)
         do {
-            try AVAudioSession.sharedInstance().setActive(false)
+            try await setAudioSessionActive(false)
             state = .stopped
             logger.info("Stopped audio and deactivated audio session")
         } catch {
@@ -164,6 +214,8 @@ final class AudioService {
 enum AudioError: LocalizedError {
     case playbackFailed(Error)
     case invalidURL
+    case activationFailed
+    case deactivationFailed
     
     var errorDescription: String? {
         switch self {
@@ -171,6 +223,10 @@ enum AudioError: LocalizedError {
             return "Playback failed: \(error.localizedDescription)"
         case .invalidURL:
             return "Invalid stream URL"
+        case .activationFailed:
+            return "Audio session activation failed"
+        case .deactivationFailed:
+            return "Audio session deactivation failed"
         }
     }
 }

@@ -28,6 +28,7 @@ struct HomeReducer {
         var error: String?
         var playerState: PlayerReducer.State?
         var selectedFilter: StationFilter = .all
+        @Presents var stationForm: StationFormReducer.State?
         // swiftlint:disable nesting
         enum StationFilter: String, CaseIterable {
             case all = "All"
@@ -61,6 +62,7 @@ struct HomeReducer {
         case player(PlayerReducer.Action)
         case pauseTapped
         case favoriteIdsLoaded([Int])
+        case stationForm(PresentationAction<StationFormReducer.Action>)
 
         case view(View)
         // swiftlint:disable nesting
@@ -70,12 +72,14 @@ struct HomeReducer {
             case navigateToAbout
             case playTapped(RadioStationEntity)
             case toggleFavorite(Int)
+            case addStationTapped
+            case editStation(RadioStationEntity)
+            case deleteStation(Int)
         }
         // swiftlint:enable nesting
     }
     
     // MARK: - Dependencies
-    @Dependency(\.homeClient) var homeClient
     @Dependency(\.playerClient) var playerClient
     @Dependency(\.databaseClient) var databaseClient
     
@@ -89,13 +93,17 @@ struct HomeReducer {
                 case .onAppear:
                     state.isLoading = true
                     return .run { send in
-                        let stations = try await homeClient.fetchStations()
-                        await send(.stationsLoaded(stations))
                         do {
+                            // No-ops after the first successful launch, since
+                            // the store won't be empty anymore.
+                            try await databaseClient.seedStationsIfNeeded()
+                            let stations = try await databaseClient.getAllStations()
+                            await send(.stationsLoaded(stations))
+
                             let favoriteIds = try await databaseClient.getFavoriteStationIds()
                             await send(.favoriteIdsLoaded(favoriteIds))
                         } catch {
-                            logger.error("Failed to load favorites: \(error)")
+                            logger.error("Failed to load stations: \(error)")
                             await send(.failedToLoad(error))
                         }
                     }
@@ -130,6 +138,29 @@ struct HomeReducer {
                             } catch {
                                 logger.error("Failed to add favorite: \(error)")
                             }
+                        }
+                    }
+
+                case .addStationTapped:
+                    state.stationForm = StationFormReducer.State(mode: .add)
+                    return .none
+
+                case .editStation(let station):
+                    state.stationForm = StationFormReducer.State(editing: station)
+                    return .none
+
+                case .deleteStation(let stationId):
+                    // Optimistically remove locally so the list updates immediately.
+                    state.stations.removeAll { $0.id == stationId }
+                    if state.playerState?.station.id == stationId {
+                        state.playerState = nil
+                    }
+                    return .run { send in
+                        do {
+                            try await databaseClient.removeStation(stationId)
+                        } catch {
+                            logger.error("Failed to delete station: \(error)")
+                            await send(.failedToLoad(error))
                         }
                     }
                     
@@ -167,6 +198,44 @@ struct HomeReducer {
                 
             case .player:
                 return .none
+
+            case .stationForm(.presented(.delegate(.save(let id, let name, let imagrUrl, let streamURL)))):
+                state.stationForm = nil
+                if let id {
+                    // Editing an existing station.
+                    let station = RadioStationEntity(id: id, name: name, imagrUrl: imagrUrl, streamURL: streamURL)
+                    return .run { send in
+                        do {
+                            try await databaseClient.updateStation(station)
+                            let stations = try await databaseClient.getAllStations()
+                            await send(.stationsLoaded(stations))
+                        } catch {
+                            logger.error("Failed to update station: \(error)")
+                            await send(.failedToLoad(error))
+                        }
+                    }
+                } else {
+                    // Adding a new station — assign the next free id.
+                    return .run { [existingIds = state.stations.map(\.id)] send in
+                        let newId = (existingIds.max() ?? 0) + 1
+                        let station = RadioStationEntity(id: newId, name: name, imagrUrl: imagrUrl, streamURL: streamURL)
+                        do {
+                            try await databaseClient.addStation(station)
+                            let stations = try await databaseClient.getAllStations()
+                            await send(.stationsLoaded(stations))
+                        } catch {
+                            logger.error("Failed to add station: \(error)")
+                            await send(.failedToLoad(error))
+                        }
+                    }
+                }
+
+            case .stationForm(.presented(.delegate(.cancel))):
+                state.stationForm = nil
+                return .none
+
+            case .stationForm:
+                return .none
                 
             case .binding:
                 return .none
@@ -174,6 +243,9 @@ struct HomeReducer {
         }
         .ifLet(\.playerState, action: \.player) {
             PlayerReducer()
+        }
+        .ifLet(\.$stationForm, action: \.stationForm) {
+            StationFormReducer()
         }
       //  ._printChanges()
     }

@@ -4,7 +4,6 @@
 //
 //  Created by Arkadiy KAZAZYAN on 28/04/2025.
 //
-
 import SwiftUI
 import ComposableArchitecture
 
@@ -28,11 +27,7 @@ struct HomeView: View {
                    .accessibilityHint("Select to show all stations or only favorites")
             
             ZStack(alignment: .bottom) {
-                ScrollView {
-                    stationListView
-                        .contentMargins(.vertical, 16)
-                }
-                .scrollTargetBehavior(.paging)
+                stationListView
                 
                 if let playerState = store.playerState {
                     MiniPlayerView(
@@ -49,6 +44,15 @@ struct HomeView: View {
             }
         }
         .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    send(.addStationTapped)
+                } label: {
+                    Image(systemName: "plus")
+                }
+                .accessibilityLabel("Add station")
+                .accessibilityHint("Opens a form to add a new radio station")
+            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     send(.navigateToAbout)
@@ -61,21 +65,31 @@ struct HomeView: View {
             send(.onAppear)
         }
         .navigationTitle("Radio Stations")
+#if (os(iOS))
         .navigationBarTitleDisplayMode(.inline)
+#endif
         .containerRelativeFrame(.vertical)
         .dynamicTypeSize(.large...DynamicTypeSize.xxxLarge)
         .animation(.easeInOut, value: store.playerState)
+        .sheet(item: $store.scope(state: \.stationForm, action: \.stationForm)) { formStore in
+            StationFormView(store: formStore)
+        }
     }
     
     private var stationListView: some View {
-        LazyVStack(spacing: 16) {
+        List {
             if store.isLoading {
                 ProgressView()
+                    .frame(maxWidth: .infinity)
                     .accessibilityLabel("Loading stations")
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
             } else if let error = store.error {
                 Text("Error: \(error)")
                     .foregroundStyle(.red)
                     .accessibilityLabel("Error: \(error)")
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
             } else {
                 ForEach(store.displayedStations) { station in
                     Button {
@@ -85,15 +99,40 @@ struct HomeView: View {
                                    isFavorite: store.favoriteStationIds.contains(station.id),
                                    onFavoriteToggle: {
                             send(.toggleFavorite(station.id))
+                        },
+                                   onEdit: {
+                            send(.editStation(station))
+                        },
+                                   onDelete: {
+                            send(.deleteStation(station.id))
                         })
                     }
                     .buttonStyle(.plain)
                     .accessibilityLabel("Play \(station.name)")
                     .accessibilityHint("Starts playing \(station.name)")
-                    .padding(.horizontal, 16)
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                        Button(role: .destructive) {
+                            send(.deleteStation(station.id))
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                        
+                        Button {
+                            send(.editStation(station))
+                        } label: {
+                            Label("Edit", systemImage: "pencil")
+                        }
+                        .tint(.blue)
+                    }
                 }
             }
         }
+        .listStyle(.plain)
+        .scrollContentBackground(.hidden)
+        .contentMargins(.bottom, 90)
     }
     
 }

@@ -35,7 +35,7 @@ public enum ModelContextKey: DependencyKey {
 func makeLiveContainer(dbFile: URL) -> ModelContainer {
     print("dbFile:\(dbFile)")
     do {
-        let schema = Schema([FavoriteStation.self])
+        let schema = Schema([FavoriteStation.self, RadioStationRecord.self])
         let config = ModelConfiguration(schema: schema)
         return try ModelContainer(for: schema, configurations: config)
     } catch {

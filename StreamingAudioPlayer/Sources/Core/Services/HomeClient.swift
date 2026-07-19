@@ -1,6 +1,6 @@
 //
 //  HomeClient.swift
-//  TCATestApp
+//  StreamingAudioPlayer
 //
 //  Created by Arkadiy KAZAZYAN on 27/05/2025.
 //
